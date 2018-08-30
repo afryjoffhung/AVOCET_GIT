@@ -11,22 +11,32 @@ library(ggplot2)
 library(lubridate)
 library(rvest)
 library(readr)
+library(grid)
 library(sharpshootR)
+library(gplots)
+library(CDECRetrieve)
 ```
 Load Precip data 
 ```{r}
-x <- read_csv("data/AVO_CDECprecip_1718.csv")
+#x <- read_csv("data/AVO_CDECprecip_1718.csv")
+
+x <- cdec_query("ucm", 2, dur_code = "E", start_date = "2017-11-06", end_date = "2018-07-23")
 
 #Edit columns
-x$DateTime <- as.POSIXct(x$ACTUAL_DATE)
+#x$DateTime <- as.POSIXct(x$ACTUAL_DATE)
 
 #Calculate event data from accumulated data 
-
 #Create lag 
-x$lag <- lag(x$VALUE, k = 1)
+x$lag <- lag(x$parameter_value, k = 1)
 
-#Difference to get precip even in cm 
-x$precip_cm <- (x$VALUE-x$lag)*2.54
+#Difference to get precip events in cm 
+x$precip_event_cm <- (x$parameter_value-x$lag)*2.54
+
+#Convert accumulated precip to cm
+x$precip_acc_cm <- (x$parameter_value)*2.54
+
+#Change column name
+names(x)[3]<-"DateTime"
 
 ```
 
@@ -39,46 +49,88 @@ Join Inflow and Precip Data
 ```{r}
 y <- inner_join(inflow, x, by = "DateTime")
 
-#Create lag 
-y$lag <- lag(y$WSE, k = 1)
-
-#Difference to get precip even in cm 
-y$WSE_change <- (y$WSE-y$lag)
+# #Create lag 
+# y$lag <- lag(y$WSE, k = 1)
+# 
+# #Difference to get precip events in cm 
+# y$WSE_change_m <- (y$WSE-y$lag)
+# y$WSE_change_cm <- (y$WSE_change_m)/100
 ```
 
 
 Plot WSE and Precip
 ```{r}
-p <- plot(y$precip_cm, y$WSE)
-p
+# p <- plot(y$precip_cm, y$WSE)
+# 
+# p
+# 
+# plot(y$DateTime, y$WSE, type = "l", col = "blue")
+# lines(y$DateTime, y$precip_cm, col = "green")
 
-p <- plot(y$WSE, y$precip_cm)
-p
 ```
 
 
 
 ```{r}
 p <- ggplot(y, aes(x = DateTime))
-  p <- p + geom_line(aes(y = WSE))
-  #+ coord_cartesian(ylim=c(120, 125))
+  p <- p + geom_line(aes(y = WSE), lty = 1) #+ coord_cartesian(ylim=c(120, 125))
   
-  
-  # adding the relative humidity data, transformed to match roughly the range of the temperature
-  p <- p + geom_line(aes(y = precip_cm/0.01, colour = "Precipitation (cm)"), lty = 3) 
-  
+  # adding the precip, transformed to match roughly the range of the WSE
+  p <- p + geom_line(aes(y = precip_event_cm*1000, colour = "Precipitation (cm)"), lty = 3)
+  p
+
   # now adding the secondary axis, following the example in the help file ?scale_y_continuous
   # and, very important, reverting the above transformation
-  p <- p + scale_y_continuous(sec.axis = sec_axis(~./0.01, name = "Precipitation (cm)"))
-  
+  p <- p + scale_y_continuous(sec.axis = sec_axis(~./1000, name = "Precipitation (cm)"))
+
   # modifying colours and theme options
-  p <- p + scale_colour_manual(labels = c("Water Surface Elevation (m)", "Precipitation (cm)"), values = c("red","blue"))
-  p <- p + labs(y = "WSE (m)",
+  p <- p + scale_colour_manual(labels = c("Water Surface Elevation (cm)", "Precipitation (cm)"), values = c("blue","red"))
+  p <- p + labs(y = "WSE",
                 x = "Date",
                 colour = NULL)
-  p <- p + ggtitle("WSE vs. Precip")
+  p <- p + ggtitle("Change in WSE vs. Precip")
   p <- p + theme(plot.title = element_text(hjust = 0.5))
-    sub12_wy06.plot <- p + theme(legend.position = c(0.85, 0.85))
-sub12_wy06.plot
+  p  <- p + theme(legend.position = c(0.85, 0.85))
+  p
+```
+```{r}
+# p1 <- ggplot(y, aes(x = DateTime))
+#   p1 <- p1 + geom_line(aes(y = WSE), lty = 1) 
+#   p1
+#   
+# p2 <- ggplot(y, aes(x = DateTime))
+#   p2 <- p2 + geom_line(aes(y = precip_cm), lty = 1) 
+#   p2
+# 
+# grid.newpage()
+# ggsave("wse_precip.jpg", path = "E:/AVOCET/AVOCET_GIT/figs", plot = grid.draw(rbind(ggplotGrob(p1), ggplotGrob(p2), size = "last")))
+```
+
+```{r}
+# # Example teratogenicity rtPCR data
+# data(rtPCR)
+# 
+# # same scale
+# overplot( RQ ~ Conc..ug.ml. | Test.Substance,
+#          data=rtPCR,
+#          subset=Detector=="ProbeType 1" & Conc..ug.ml. > 0,
+#          same.scale=TRUE,
+#          log="xy",
+#          f=3/4,
+#          main="Detector=ProbeType 1",
+#          xlab="Concentration (ug/ml)",
+#          ylab="Relative Gene Quantification"
+#          )
+# 
+# overplot( RQ ~ Conc..ug.ml. | Test.Substance,
+#          data=rtPCR,
+#          subset=Detector=="ProbeType 8" & Conc..ug.ml. > 0,
+#          log="xy",
+#          f=3/4,
+#          main="Detector=ProbeType 8",
+#          xlab="Concentration (ug/ml)",
+#          ylab="Relative Gene Quantification",
+#          min.y=0.01
+#          )
 ```
 
