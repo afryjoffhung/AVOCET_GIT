@@ -1,0 +1,84 @@
+---
+title: "AVO_Precip_WSE"
+output: html_notebook
+---
+
+Load required packages
+```{r}
+library(plyr)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(rvest)
+library(readr)
+library(sharpshootR)
+```
+Load Precip data 
+```{r}
+x <- read_csv("data/AVO_CDECprecip_1718.csv")
+
+#Edit columns
+x$DateTime <- as.POSIXct(x$ACTUAL_DATE)
+
+#Calculate event data from accumulated data 
+
+#Create lag 
+x$lag <- lag(x$VALUE, k = 1)
+
+#Difference to get precip even in cm 
+x$precip_cm <- (x$VALUE-x$lag)*2.54
+
+```
+
+
+Load Processed Inflow Data
+```{r}
+inflow <- read_csv("data/AVO_Inflows_15min.csv")
+```
+Join Inflow and Precip Data
+```{r}
+y <- inner_join(inflow, x, by = "DateTime")
+
+#Create lag 
+y$lag <- lag(y$WSE, k = 1)
+
+#Difference to get precip even in cm 
+y$WSE_change <- (y$WSE-y$lag)
+```
+
+
+Plot WSE and Precip
+```{r}
+p <- plot(y$precip_cm, y$WSE)
+p
+
+p <- plot(y$WSE, y$precip_cm)
+p
+```
+
+
+
+```{r}
+p <- ggplot(y, aes(x = DateTime))
+  p <- p + geom_line(aes(y = WSE))
+  #+ coord_cartesian(ylim=c(120, 125))
+  
+  
+  # adding the relative humidity data, transformed to match roughly the range of the temperature
+  p <- p + geom_line(aes(y = precip_cm/0.01, colour = "Precipitation (cm)"), lty = 3) 
+  
+  # now adding the secondary axis, following the example in the help file ?scale_y_continuous
+  # and, very important, reverting the above transformation
+  p <- p + scale_y_continuous(sec.axis = sec_axis(~./0.01, name = "Precipitation (cm)"))
+  
+  # modifying colours and theme options
+  p <- p + scale_colour_manual(labels = c("Water Surface Elevation (m)", "Precipitation (cm)"), values = c("red","blue"))
+  p <- p + labs(y = "WSE (m)",
+                x = "Date",
+                colour = NULL)
+  p <- p + ggtitle("WSE vs. Precip")
+  p <- p + theme(plot.title = element_text(hjust = 0.5))
+    sub12_wy06.plot <- p + theme(legend.position = c(0.85, 0.85))
+sub12_wy06.plot
+```
+
