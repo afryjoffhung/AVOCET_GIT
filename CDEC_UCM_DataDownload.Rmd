@@ -1,0 +1,222 @@
+---
+title: "CDEC UCM Data Download"
+output: html_notebook
+---
+
+Load Required Packages
+
+```{r}
+library(plyr)
+library(dplyr)
+library(sharpshootR)
+library(ggplot2)
+library(lubridate)
+library(rvest)
+library(weathermetrics)
+```
+
+Download CDEC Data for UCM
+http://cdec.water.ca.gov/dynamicapp/staMeta?station_id=UCM 
+
+
+```{r}
+#Set working directory
+setwd("C:\\Users\\Anna\\Desktop\\Weather\\UCM\\UCM_CDEC_1718")
+
+#Get metadata for weather station to validate sensor/interval 
+ucm <-CDEC_StationInfo("ucm")
+write.csv(ucm, file = "ucm_cdec.csv")
+
+#ATMOSPHERIC PRESSURE, INCHES
+bar_pres <- CDECquery(id='ucm', sensor=17, interval='E', start='2017-05-19', end='2018-07-20')
+bar_pres <- bar_pres[complete.cases(bar_pres), ]
+names(bar_pres)[4]<-"bar_pres_in"
+write.csv(bar_pres, file = "bar_pres.csv")
+
+#EVAPORATION, PAN INCREMENT, INCHES	
+evp_pan <- CDECquery(id='ucm', sensor=64, interval='E', start='2017-05-19', end='2018-07-20')
+evp_pan <- evp_pan[complete.cases(evp_pan), ]
+names(evp_pan)[4]<-"evp_pan_in"
+write.csv(evp_pan, file = "evap_pan.csv")
+
+#NET RADIATION, W/M^2
+net_rad <- CDECquery(id='ucm', sensor=29, interval='E', start='2017-05-19', end='2018-07-20')
+net_rad <- net_rad[complete.cases(net_rad), ]
+names(net_rad)[4]<-"net_rad_Wm2"
+write.csv(net_rad, file = "net_rad.csv")
+
+#PRECIPITATION, ACCUMULATED, INCHES
+### Need to convert to events
+precip_acc <- CDECquery(id='ucm', sensor=2, interval='E', start='2017-05-19', end='2018-07-20')
+precip_acc <- precip_acc[complete.cases(precip_acc), ]
+names(precip_acc)[4]<-"precip_acc_in"
+precip_acc$precip_event_in <- c(precip_acc$precip_acc_in[1], diff(precip_acc$precip_acc_in))
+#Replace first column value and negative value to 0
+precip_acc$precip_event_in <- if_else(precip_acc$precip_event_in<0, 0, precip_acc$precip_event_in)
+precip_acc$precip_event_in <- if_else(precip_acc$precip_event_in == precip_acc$precip_event_in, 0, precip_acc$precip_event_in)
+write.csv(precip_acc, file = "precip_edited.csv")
+
+#RELATIVE HUMIDITY, %
+rel_hum <- CDECquery(id='ucm', sensor=12, interval='E', start='2017-05-19', end='2018-07-20')
+rel_hum <- rel_hum[complete.cases(rel_hum), ]
+names(rel_hum)[4]<-"rel_hum_pct"
+write.csv(rel_hum, file = "rel_hum.csv")
+
+#TEMPERATURE, AIR AVERAGE, DEG F
+temp_avg <- CDECquery(id='ucm', sensor=30, interval='E', start='2017-05-19', end='2018-07-20')
+temp_avg <- temp_avg[complete.cases(temp_avg), ]
+names(temp_avg)[4]<-"temp_avg_degF"
+temp_avg$temp_avg_degC <- fahrenheit.to.celsius(temp_avg$temp_avg_degF, round = 0)
+write.csv(temp_avg, file = "temp_avg_edited.csv")
+
+#WIND, DIRECTION, DEG
+wind_dir <- CDECquery(id='ucm', sensor=10, interval='E', start='2017-05-19', end='2018-07-20')
+wind_dir <- wind_dir[complete.cases(wind_dir), ]
+names(wind_dir)[4]<-"wind_dir_deg"
+write.csv(wind_dir, file = "wind_dir.csv")
+
+#WIND, DIRECTION OF PEAK GUST, DEG
+peak_wd <- CDECquery(id='ucm', sensor=78, interval='E', start='2017-05-19', end='2018-07-20')
+peak_wd <- peak_wd[complete.cases(peak_wd), ]
+names(peak_wd)[4]<-"peak_wd_deg"
+write.csv(peak_wd, file = "peak_wd.csv")
+
+#WIND, PEAK GUST, MPH
+peak_ws <- CDECquery(id='ucm', sensor=77, interval='E', start='2017-05-19', end='2018-07-20')
+peak_ws <- peak_ws[complete.cases(peak_ws), ]
+names(peak_ws)[4]<-"peak_ws_mph"
+write.csv(peak_ws, file = "peak_ws.csv")
+
+#WIND, SPEED, MPH
+wind_sp <- CDECquery(id='ucm', sensor=9, interval='E', start='2017-05-19', end='2018-07-20')
+wind_sp <- wind_sp[complete.cases(wind_sp), ]
+names(wind_sp)[4]<-"wind_sp_mph"
+write.csv(wind_sp, file = "wind_sp.csv")
+
+#ALBEDO, %
+albedo <- CDECquery(id='ucm', sensor=245, interval='H', start='2017-05-19', end='2018-07-20')
+albedo <- albedo[complete.cases(albedo), ]
+names(albedo)[4]<-"albedo_pct"
+write.csv(albedo, file = "albedo.csv")
+
+#EVAPORATION RATE, IN/DAY
+evap_rate <- CDECquery(id='ucm', sensor=175, interval='H', start='2017-05-19', end='2018-07-20')
+evap_rate <- evap_rate[complete.cases(evap_rate), ]
+names(evap_rate)[4]<-"evap_rate_inDay"
+write.csv(evap_rate, file = "evap_rate.csv")
+
+#INFRARED RADIATION, INCOMING, W/M^2
+infr_in <- CDECquery(id='ucm', sensor=250, interval='H', start='2017-05-19', end='2018-07-20')
+infr_in <- infr_in[complete.cases(infr_in), ]
+names(infr_in)[4]<-"infr_in_Wm2"
+write.csv(infr_in, file = "infr_in.csv")
+
+#INFRARED RADIATION, NET, W/M^2
+infr_net <- CDECquery(id='ucm', sensor=251, interval='H', start='2017-05-19', end='2018-07-20')
+infr_net <- infr_net[complete.cases(infr_net), ]
+names(infr_net)[4]<-"infr_net_Wm2"
+write.csv(infr_net, file = "infr_net.csv")
+
+#INFRARED RADIATION, REFLECTED, W/M^2
+infr_ref <- CDECquery(id='ucm', sensor=249, interval='H', start='2017-05-19', end='2018-07-20')
+infr_ref <- infr_ref[complete.cases(infr_ref), ]
+names(infr_ref)[4]<-"infr_ref_Wm2"
+write.csv(infr_ref, file = "infr_ref.csv")
+
+#NET TOTAL RADIATION, W/M^2
+net_totr <- CDECquery(id='ucm', sensor=252, interval='H', start='2017-05-19', end='2018-07-20')
+net_totr <- net_totr[complete.cases(net_totr), ]
+names(net_totr)[4]<-"net_totr_Wm2"
+write.csv(net_totr, file = "net_totr.csv")
+
+#SOLAR RADIATION, INCOMING, W/M^2
+slrr_in <- CDECquery(id='ucm', sensor=247, interval='H', start='2017-05-19', end='2018-07-20')
+slrr_in <- slrr_in[complete.cases(slrr_in), ]
+names(slrr_in)[4]<-"slrr_in_Wm2"
+write.csv(slrr_in, file = "slrr_in.csv")
+
+#SOLAR RADIATION, NET, W/M^2
+slrr_net <- CDECquery(id='ucm', sensor=248, interval='H', start='2017-05-19', end='2018-07-20')
+slrr_net <- slrr_net[complete.cases(slrr_net), ]
+names(slrr_net)[4]<-"slrr_net_Wm2"
+write.csv(slrr_net, file = "slrr_net.csv")
+
+#SOLAR RADIATION, REFLECTED, W/M^2
+slrr_ref <- CDECquery(id='ucm', sensor=246, interval='H', start='2017-05-19', end='2018-07-20')
+slrr_ref <- slrr_ref[complete.cases(slrr_ref), ]
+names(slrr_ref)[4]<-"slrr_ref_Wm2"
+write.csv(slrr_ref, file = "slrr_ref.csv")
+
+#SOIL MOISTR, DEPTH 1, %
+soil_md1 <- CDECquery(id='ucm', sensor= 197, interval='H', start='2017-05-19', end='2018-07-20')
+soil_md1 <- soil_md1[complete.cases(soil_md1), ]
+names(soil_md1)[4]<-"soil_md1_pct"
+write.csv(soil_md1, file = "soil_md1.csv")
+
+#SOIL MOISTR, DEPTH 2, %
+soil_md2 <- CDECquery(id='ucm', sensor= 198, interval='H', start='2017-05-19', end='2018-07-20')
+soil_md2 <- soil_md2[complete.cases(soil_md2), ]
+names(soil_md2)[4]<-"soil_md2_pct"
+write.csv(soil_md2, file = "soil_md2.csv")
+
+#SOIL MOISTR, DEPTH 3, %
+soil_md3 <- CDECquery(id='ucm', sensor= 199, interval='H', start='2017-05-19', end='2018-07-20')
+soil_md3 <- soil_md3[complete.cases(soil_md3), ]
+names(soil_md3)[4]<-"soil_md3_pct"
+write.csv(soil_md3, file = "soil_md3.csv")
+
+#SOIL MOISTR, DEPTH 50CM, %
+soil_md5 <- CDECquery(id='ucm', sensor= 242, interval='H', start='2017-05-19', end='2018-07-20')
+soil_md5 <- soil_md5[complete.cases(soil_md5), ]
+names(soil_md5)[4]<-"soil_md5_pct"
+write.csv(soil_md5, file = "soil_md5.csv")
+
+#SOIL MOISTR, DEPTH 60CM, %
+soil_md6 <- CDECquery(id='ucm', sensor= 243, interval='H', start='2017-05-19', end='2018-07-20')
+soil_md6 <- soil_md6[complete.cases(soil_md6), ]
+names(soil_md6)[4]<-"soil_md6_pct"
+write.csv(soil_md6, file = "soil_md6.csv")
+
+#SOIL MOISTR, DEPTH 70CM, %
+soil_md7 <- CDECquery(id='ucm', sensor= 244, interval='H', start='2017-05-19', end='2018-07-20')
+soil_md7 <- soil_md7[complete.cases(soil_md7), ]
+names(soil_md7)[4]<-"soil_md7_pct"
+write.csv(soil_md7, file = "soil_md7.csv")
+
+#SOIL TEMP, DEPTH 1, DEG F
+soil_td1 <- CDECquery(id='ucm', sensor= 194, interval='H', start='2017-05-19', end='2018-07-20')
+soil_td1 <- soil_td1[complete.cases(soil_td1), ]
+names(soil_td1)[4]<-"soil_td1_degF"
+write.csv(soil_td1, file = "soil_td1.csv")
+
+#SOIL TEMP, DEPTH 2, DEG F
+soil_td2 <- CDECquery(id='ucm', sensor= 195, interval='H', start='2017-05-19', end='2018-07-20')
+soil_td2 <- soil_td2[complete.cases(soil_td2), ]
+names(soil_td2)[4]<-"soil_td2_degF"
+write.csv(soil_td2, file = "soil_td2.csv")
+
+#SOIL TEMP, DEPTH 3, DEG F
+soil_td3 <- CDECquery(id='ucm', sensor= 196, interval='H', start='2017-05-19', end='2018-07-20')
+soil_td3 <- soil_td3[complete.cases(soil_td3), ]
+names(soil_td3)[4]<-"soil_td3_degF"
+write.csv(soil_td3, file = "soil_td3.csv")
+
+#SOIL TEMP, DEPTH 50CM, DEG F
+soil_td5 <- CDECquery(id='ucm', sensor= 239, interval='H', start='2017-05-19', end='2018-07-20')
+soil_td5 <- soil_td5[complete.cases(soil_td5), ]
+names(soil_td5)[4]<-"soil_td5_degF"
+write.csv(soil_td5, file = "soil_td5.csv")
+
+#SOIL TEMP, DEPTH 60CM, DEG F
+soil_td6 <- CDECquery(id='ucm', sensor= 240, interval='H', start='2017-05-19', end='2018-07-20')
+soil_td6 <- soil_td6[complete.cases(soil_td6), ]
+names(soil_td6)[4]<-"soil_td6_degF"
+write.csv(soil_td6, file = "soil_td6.csv")
+
+#SOIL TEMP, DEPT7H 70CM, DEG F
+soil_td7 <- CDECquery(id='ucm', sensor= 241, interval='H', start='2017-05-19', end='2018-07-20')
+soil_td7 <- soil_td7[complete.cases(soil_td7), ]
+names(soil_td7)[4]<-"soil_td7_degF"
+write.csv(soil_td7, file = "soil_td7.csv")
+
+```

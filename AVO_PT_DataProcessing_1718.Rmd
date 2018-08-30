@@ -1,0 +1,108 @@
+---
+title: "AVO PT Data Processing"
+output: html_notebook
+---
+
+##Wrangle PT Data for Avocet from 11-6-2017-8-10-2018
+
+#Load Required Packages
+```{r}
+#Load Required Packages
+library(plyr)
+library(dplyr)
+#library(sharpshootR)
+library(ggplot2)
+library(lubridate)
+library(rvest)
+#library(weathermetrics)
+library(readr)
+```
+
+
+
+#TEST/DO NOT RUN: Import csv files exported from HOBOware
+```{r eval = FALSE}
+
+#Read in csv - only select columns
+less_columns <- read.csv("R_Data/20180311_AVOCET_corrected_24.csv")[,1:6]
+head(less_columns)
+
+#Rename Column
+rename_columns <- rename(less_columns, Order = 1, DateTime = 2, PT_kPa = 3, WaterTemp_c = 4, Baro_kPa = 5, PT_Depth_m = 6)
+
+#Remove rows in NA values
+remove_NAs <- rename_columns[complete.cases(rename_columns),]
+
+#Remove rows with negative sensor depth
+remove_neg <- remove_NAs[remove_NAs$PT_Depth_m >= 0, ]
+
+
+```
+
+http://www.onsetcomp.com/support/forum/post/hoboware-reading-hobo-files-r
+
+```{r}
+getwd()
+```
+
+
+#Import first half of PT Data 11/6/17-3/11/2018
+```{r}
+#Import first half of PT Data 11/6/17-3/11/2018
+x <- read.csv("R_Data/20180311_AVOCET_corrected_24.csv")[,1:6]
+x <- rename(x, Order = 1, DateTime = 2, PT_kPa = 3, WaterTemp_c = 4, Baro_kPa = 5, PT_Depth_m = 6)
+x <- x[complete.cases(x),]
+x <- x[x$PT_Depth_m >= 0.1, ]
+x$Adjusted_PTDepth <- x$PT_Depth_m+0.05
+x$DateTime <- mdy_hms(x$DateTime)
+x$Adjusted_WSE <- x$Adjusted_PTDepth + 121.472
+AVO_PThobo_0311_cleaned <- x
+
+```
+
+#Import second half of PT Data 3/11/2018 - 8/10/2018
+```{r}
+#Import second half of PT Data 3/11/2018 - 8/10/2018
+x <- read.csv("R_Data/20180810_AVOCET_corrected_24.csv")[,1:6]
+x <- rename(x, Order = 1, DateTime = 2, PT_kPa = 3,WaterTemp_c = 4,Baro_kPa = 5, PT_Depth_m = 6)
+x <- x[complete.cases(x),]
+x <- x[x$PT_Depth_m >= 0.1, ]
+x$Adjusted_PTDepth <- x$PT_Depth_m+0.05
+x$DateTime <- mdy_hms(x$DateTime)
+x$Adjusted_WSE <- x$Adjusted_PTDepth + 121.472
+AVO_PThobo_0810_cleaned <- x
+```
+
+#Combine Datasets
+```{r}
+#Combine Datasets
+
+AVO_PThobo_1718 <- rbind(AVO_PThobo_0311_cleaned, AVO_PThobo_0810_cleaned)
+setwd("R_Data")
+write.csv(AVO_PThobo_1718, file = "AVO_PThobo_1718.csv")
+```
+
+#Plot Combined Dataset
+```{r}
+ggplot(AVO_PThobo_1718, aes(x = DateTime, y = Adjusted_PTDepth))+
+  geom_line()
+```
+
+##Import PT Visual Check Data
+```{r}
+##Import PT Visual Check Data
+x <- read.csv("R_Data/AVO_PTCheck_1718.csv")
+x$DateTime <- mdy_hm(x$DateTime)
+AVO_PTcheck_1718 <- x
+```
+
+#Join and compare observed vs measured values
+```{r}
+AVO_PTjoin <- merge(x = AVO_PTcheck_1718, y = AVO_PThobo_1718, by = "DateTime", all.x = TRUE)
+AVO_PTjoin$Obs_Rec_Diff <- (AVO_PTjoin$Observed_Depth - AVO_PTjoin$Adjusted_PTDepth)
+AVO_PTjoin_compare <- AVO_PTjoin
+setwd("R_Data")
+write.csv(AVO_PTjoin_compare, file = "AVO_PTjoin_compare.csv")
+```
+
+

@@ -1,0 +1,105 @@
+---
+title: "CDEC_AvgWindDirection"
+output: html_notebook
+---
+
+Load Required Packages
+
+```{r}
+library(plyr)
+library(dplyr)
+library(sharpshootR)
+library(openair)
+library(ggplot2)
+library(lubridate)
+```
+
+Get Station Info for UCM CDEC Weather Station
+
+```{r}
+ucm.cdec <-CDEC_StationInfo("ucm")
+```
+
+
+
+Download CDEC Data for UCM
+http://cdec.water.ca.gov/dynamicapp/staMeta?station_id=UCM 
+
+
+```{r}
+#Download wind direction data
+wind.dir <- CDECquery(id='ucm', sensor=10, interval='E', start='2017-05-18', end='2018-05-18')
+
+#Download wind speed data
+wind.sp <- CDECquery(id='ucm', sensor=9, interval='E', start='2017-05-18', end='2018-05-18')
+
+```
+
+Record mismatch - find duplicates
+https://stackoverflow.com/questions/16905425/find-duplicate-values-in-r 
+https://www.rdocumentation.org/packages/dplyr/versions/0.7.5/topics/distinct 
+```{r}
+#test <- wind.sp %>% 
+#  group_by(datetime) %>% 
+#  filter(n()>1)
+
+#test <- wind.dir %>% 
+#  group_by(datetime) %>% 
+#  filter(n()>1)
+
+wind.sp2 <- wind.sp[complete.cases(wind.sp), ]
+wind.dir2 <- wind.dir[complete.cases(wind.dir), ]
+
+```
+
+Rename Columns
+```{r}
+names(wind.sp2)[4]<-"ws"
+names(wind.dir2)[4]<-"wd"
+```
+
+
+Combine dataframes
+```{r}
+wind.ucm <- merge(wind.dir2, wind.sp2, by = "datetime")
+```
+
+Average Wind Speed and Direction
+https://www.researchgate.net/profile/Stuart_Grange2/publication/262766424_Technical_note_Averaging_wind_speeds_and_directions/links/54f6184f0cf27d8ed71d5bd4/Technical-note-Averaging-wind-speeds-and-directions.pdf 
+
+```{r}
+# Calculate the u and v wind components
+wind.ucm$u.wind <- - wind.ucm$ws * sin(2 * pi * wind.ucm$wd/360)
+wind.ucm$v.wind <- - wind.ucm$ws * cos(2 * pi * wind.ucm$wd/360)
+
+# Calculate the average wind vectors
+mean.u <- mean(wind.ucm$u.wind, na.rm = T)
+mean.v <- mean(wind.ucm$v.wind, na.rm = T)
+
+# Calculate the resultant vector average wind direction with atan2
+wd.average <- (atan2(mean.u, mean.v) * 360/2/pi) + 180
+
+# Display
+wd.average
+
+# Calculate the vector average wind speed
+ws.vector.average <- ((mean.u^2 + mean.v^2)^0.5)
+ws.vector.average
+
+# Calculate the scalar average wind speed, the standard mean
+ws.scalar.average <- mean(wind.ucm$ws, na.rm = T)
+ws.scalar.average
+
+
+```
+
+```{r}
+avo.wind <- windRose(wind.ucm, paddle = F)
+
+png(filename="C:/Users/Anna/Desktop/AVO/avo_windrose.png")
+plot(avo.wind)
+dev.off()
+```
+
+
+

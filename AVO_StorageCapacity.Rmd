@@ -1,0 +1,103 @@
+---
+title: "AVO_StorageCapacity"
+output: html_notebook
+---
+
+```{r}
+library(plyr)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(rvest)
+library(readr)
+library(sharpshootR)
+```
+```{r}
+#Set working directory
+setwd("G:/DATA/ANALYSIS/AVO_Summer/StorageCapacity")
+
+#Download CDEC precip data
+
+#PRECIPITATION, ACCUMULATED, INCHES
+### Need to convert to events
+ucm <- CDEC_StationInfo("ucm")
+precip_acc <- CDECquery(id='UCM', sensor=2, interval='H', start='2017-11-06', end='2018-08-10')
+precip_acc <- precip_acc[complete.cases(precip_acc), ]
+names(precip_acc)[4]<-"precip_acc_in"
+precip_acc$precip_event_in <- c(precip_acc$precip_acc_in[1], diff(precip_acc$precip_acc_in))
+#Replace first column value and negative value to 0
+precip_acc$precip_event_in <- if_else(precip_acc$precip_event_in<0, 0, precip_acc$precip_event_in)
+precip_acc$precip_event_in <- if_else(precip_acc$precip_event_in == precip_acc$precip_event_in, 0, precip_acc$precip_event_in)
+write.csv(precip_acc, file = "precip_edited.csv")
+
+
+#Import csvs
+PT <- read_csv("AVO_PThobo_1718.csv")
+SC <- read_csv("AVO_StorageCapacity_1cm.csv")
+PCP <- read_csv("precip_edited.csv")
+```
+
+#Aggregate Data at 15min interval and calculate flux
+```{r}
+#Adjust variable lengths to match
+PT$WSE <- round(PT$Adjusted_WSE, digits = 2)
+SC$WSE <- round(SC$ELEVATION, digits = 2)
+
+#Merge datasets based on ELEV/WSE
+x <- inner_join(PT, SC, by = "WSE")
+#Create lag to difference volumes
+x$lag <- lag(x$VOLUME, k = 1)
+#Volume difference
+x$vol_chg <- x$VOLUME-x$lag
+#Calculate flow m3/s - from m3/15min
+x$flow <- x$vol_chg/900
+#Create new dataset with desired columns
+flux <- x[,c(3,5,10,14,15,17,18)]
+#Write csv
+write.csv(flux, "AVO_Inflows_15min.csv")
+
+```
+
+#Aggregate Data at 1hr interval and calculate flux
+```{r}
+#Merge datasets based on ELEV/WSE
+x <- inner_join(PT, SC, by = "WSE") 
+x$Date <- date(x$DateTime)
+x$Time <- time(x$DateTime)
+x$Hour <- hour(x$DateTime)
+x <- x %>% group_by(x$Date, x$Hour) %>% 
+  summarize(WSEmax = max(WSE), VOLUME = max(VOLUME))
+x
+
+#Create lag to difference volumes
+x$lag <- lag(x$VOLUME, k = 1)
+#Volume difference
+x$vol_chg <- x$VOLUME-x$lag
+#Calculate flow m3/s - from m3/hr
+x$inflow <- x$vol_chg/3600
+#Set negative inflow values to 0
+x$inflow[x$inflow<0] <- 0
+#Write csv
+write.csv(x, "AVO_Inflows_Hourly.csv")
+```
+
+#Aggregate Data at Daily interval and calculate flux
+```{r}
+x <- inner_join(PT, SC, by = "WSE") 
+x$Date <- date(x$DateTime)
+x$Time <- time(x$DateTime)
+x <- x %>% group_by(x$Date) %>% 
+  summarize(WSEmax = max(WSE), VOLUME = max(VOLUME))
+x
+
+#Create lag to difference volumes
+x$lag <- lag(x$VOLUME, k = 1)
+#Volume difference
+x$vol_chg <- x$VOLUME-x$lag
+#Calculate flow m3/s - from m3/day
+x$inflow <- x$vol_chg/86400
+#Set negative inflow values to 0
+x$inflow[x$inflow<0] <- 0
+#Write csv
+write.csv(x, "AVO_Inflows_Daily.csv")
+```
