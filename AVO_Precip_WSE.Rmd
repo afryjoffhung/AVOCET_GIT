@@ -49,49 +49,82 @@ Join Inflow and Precip Data
 ```{r}
 y <- inner_join(inflow, x, by = "DateTime")
 
-# #Create lag 
-# y$lag <- lag(y$WSE, k = 1)
-# 
-# #Difference to get precip events in cm 
-# y$WSE_change_m <- (y$WSE-y$lag)
-# y$WSE_change_cm <- (y$WSE_change_m)/100
+#Create columns for depth in different units
+y$Depth_m <- (y$WSE-120.77)
+y$Depth_cm <- (y$WSE-120.77)*100
+
+#Calculate day to day % change in precip
+
+# Percent Change for Precip
+#https://stackoverflow.com/questions/48196552/calculate-percentage-change-in-r-using-dplyr 
+y$precip_pct_chg <- (y$precip_acc_cm/lag(y$precip_acc_cm) - 1) * 100
+# Percent of Total
+y$precip_pct_tot <- (y$precip_acc_cm/25.5778) * 100
+
+#Percent Change for Pond
+
+
+
 ```
 
 
-Plot WSE and Precip
+Plot Cumulative Precip
 ```{r}
-# p <- plot(y$precip_cm, y$WSE)
-# 
-# p
-# 
-# plot(y$DateTime, y$WSE, type = "l", col = "blue")
-# lines(y$DateTime, y$precip_cm, col = "green")
+# https://thepracticalr.wordpress.com/2016/08/30/2-y-axis-plotting/ 
 
+png("figs/depth_precip.png", width = 800, height = 600)
+
+par(mar = c(5, 5, 3, 5))
+plot(y$DateTime, y$Depth_cm, type ="l", ylab = "Depth (cm)", main = "Depth vs. Cumulative Precip", xlab = "Date", col = "deepskyblue")
+par(new = TRUE)
+plot(y$DateTime, y$precip_acc_cm, type ="l", xaxt = "n", yaxt = "n", ylab = "", xlab = "", col = "darkblue", lty = 2)
+axis(side = 4)
+mtext("Precip (cm)", side = 4, line = 3)
+legend("topleft", c("Depth (cm)", "Precip (cm)"),
+       col = c("deepskyblue", "darkblue"), lty = c(1, 2))
+
+dev.off()
+```
+
+Plot Precip Percents
+
+```{r}
+png("figs/precip_change.png", width = 800, height = 600)
+
+par(mar = c(5, 5, 3, 5))
+plot(y$DateTime, y$precip_pct_chg, type ="l", ylab = "% Change", main = "Changes in Precip", xlab = "Date", col = "deepskyblue")
+par(new = TRUE)
+plot(y$DateTime, y$precip_pct_tot, type ="l", xaxt = "n", yaxt = "n", ylab = "", xlab = "", col = "darkblue", lty = 2)
+axis(side = 4)
+mtext("% Total", side = 4, line = 3)
+legend("right", c("% Change", "% Total"),
+       col = c("deepskyblue", "darkblue"), lty = c(1, 2))
+
+dev.off()
 ```
 
 
-
 ```{r}
-p <- ggplot(y, aes(x = DateTime))
-  p <- p + geom_line(aes(y = WSE), lty = 1) #+ coord_cartesian(ylim=c(120, 125))
-  
-  # adding the precip, transformed to match roughly the range of the WSE
-  p <- p + geom_line(aes(y = precip_event_cm*1000, colour = "Precipitation (cm)"), lty = 3)
-  p
-
-  # now adding the secondary axis, following the example in the help file ?scale_y_continuous
-  # and, very important, reverting the above transformation
-  p <- p + scale_y_continuous(sec.axis = sec_axis(~./1000, name = "Precipitation (cm)"))
-
-  # modifying colours and theme options
-  p <- p + scale_colour_manual(labels = c("Water Surface Elevation (cm)", "Precipitation (cm)"), values = c("blue","red"))
-  p <- p + labs(y = "WSE",
-                x = "Date",
-                colour = NULL)
-  p <- p + ggtitle("Change in WSE vs. Precip")
-  p <- p + theme(plot.title = element_text(hjust = 0.5))
-  p  <- p + theme(legend.position = c(0.85, 0.85))
-  p
+# p <- ggplot(y, aes(x = DateTime))
+#   p <- p + geom_line(aes(y = WSE), lty = 1) #+ coord_cartesian(ylim=c(120, 125))
+#   
+#   # adding the precip, transformed to match roughly the range of the WSE
+#   p <- p + geom_line(aes(y = precip_acc_cm, colour = "Precipitation (cm)"), lty = 3)
+#   p
+# 
+#   # now adding the secondary axis, following the example in the help file ?scale_y_continuous
+#   # and, very important, reverting the above transformation
+#   p <- p + scale_y_continuous(sec.axis = sec_axis(~., name = "Precipitation (cm)"))
+# 
+#   # modifying colours and theme options
+#   p <- p + scale_colour_manual(labels = c("Water Surface Elevation (cm)", "Precipitation (cm)"), values = c("blue","red"))
+#   p <- p + labs(y = "WSE",
+#                 x = "Date",
+#                 colour = NULL)
+#   p <- p + ggtitle("Change in WSE vs. Precip")
+#   p <- p + theme(plot.title = element_text(hjust = 0.5))
+#   p  <- p + theme(legend.position = c(0.85, 0.85))
+#   p
 ```
 ```{r}
 # p1 <- ggplot(y, aes(x = DateTime))
@@ -104,33 +137,5 @@ p <- ggplot(y, aes(x = DateTime))
 # 
 # grid.newpage()
 # ggsave("wse_precip.jpg", path = "E:/AVOCET/AVOCET_GIT/figs", plot = grid.draw(rbind(ggplotGrob(p1), ggplotGrob(p2), size = "last")))
-```
-
-```{r}
-# # Example teratogenicity rtPCR data
-# data(rtPCR)
-# 
-# # same scale
-# overplot( RQ ~ Conc..ug.ml. | Test.Substance,
-#          data=rtPCR,
-#          subset=Detector=="ProbeType 1" & Conc..ug.ml. > 0,
-#          same.scale=TRUE,
-#          log="xy",
-#          f=3/4,
-#          main="Detector=ProbeType 1",
-#          xlab="Concentration (ug/ml)",
-#          ylab="Relative Gene Quantification"
-#          )
-# 
-# overplot( RQ ~ Conc..ug.ml. | Test.Substance,
-#          data=rtPCR,
-#          subset=Detector=="ProbeType 8" & Conc..ug.ml. > 0,
-#          log="xy",
-#          f=3/4,
-#          main="Detector=ProbeType 8",
-#          xlab="Concentration (ug/ml)",
-#          ylab="Relative Gene Quantification",
-#          min.y=0.01
-#          )
 ```
 
