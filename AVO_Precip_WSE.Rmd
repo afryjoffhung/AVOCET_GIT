@@ -12,7 +12,7 @@ library(lubridate)
 library(rvest)
 library(readr)
 library(grid)
-library(sharpshootR)
+#library(sharpshootR)
 library(gplots)
 library(CDECRetrieve)
 ```
@@ -204,39 +204,50 @@ names(storm_days)[1] <- "Date"
 
 #filter pond data to storm events
 pond_storms <- semi_join(y, storm_days, by = "Date")
+# Create Storm Event Groupings based on consecutive days https://stackoverflow.com/questions/37342412/r-find-dates-consecutive 
 pond_storms$storm_event <- cumsum(c(1, diff.Date(pond_storms$Date)) >= 3)
 pond_storms
 
  storm_stats <- pond_storms %>% 
   group_by(storm_event) %>% 
   summarise(precip_mm = (max(precip_acc_cm)-min(precip_acc_cm))*10, vol_gain = (max(VOLUME)-min(VOLUME)), start_date = min(Date), end_date = max(Date))
+ 
+ storm_stats$duration <- paste(storm_stats$start_date, storm_stats$end_date, sep = "-")
 ```
 
 
+Plotting Storm Event Precip by Pond Vol Gain
+```{r}
+# ps <- plot(storm_stats$precip_mm, storm_stats$vol_gain, ylab = "Pond Volume Gain m^3", main = "Storm Events vs. Pond Volume", xlab = "Precip (mm)", col = as.factor(storm_stats$duration))
+# legend("topleft", unique(storm_stats$duration),
+#        col = as.factor(storm_stats$duration))
+# 
+# ps <- plot(storm_stats$precip_mm, storm_stats$vol_gain, ylab = "Pond Volume Gain m^3", main = "Storm Events vs. Pond Volume", xlab = "Precip (mm)", col = as.factor(storm_stats$storm_event))
+# legend("topleft", legend = as.factor(storm_stats$storm_event), col=1:length(storm_stats$storm_event), pch = storm_stats$storm_event, ncol = 3)
+
+
+```
+Plotting Storm Event Precip and Pond Vol Gain
+```{r}
+#storms <- plot(storm_stats$start_date, storm_stats$vol_gain, ylab = "Pond Volume Gain m^3", main = "Storm Events vs. Pond Volume", xlab = "Date")
+#precip <- plot(storm_stats$start_date, storm_stats$precip_mm, ylab = "Precip (mm)", main = "Storm Events vs. Pond Volume", xlab = "Date")
+
+png("figs/storms_vol_precip.png", width = 800, height = 600)
+
+par(mar = c(5, 5, 3, 5))
+plot(storm_stats$start_date, storm_stats$vol_gain, type ="p", pch = 19, ylab = "Volume (m^3)", main = "Storm Events vs. Pond Volume", xlab = "Date", col = "deepskyblue")
+par(new = TRUE)
+plot(storm_stats$start_date, storm_stats$precip_mm, type ="p", xaxt = "n", yaxt = "n", ylab = "", xlab = "", col = "darkblue", lty = 2)
+axis(side = 4)
+mtext("Precip (mm)", side = 4, line = 3)
+legend("left", inset = 0.01, c("Volume (m^3)", "Precip (mm)"),
+       col = c("deepskyblue", "darkblue"), pch = c(19, 1))
+
+dev.off()
+```
+
 
 ```{r}
-p <- ggplot(y, aes(x = Date))
-  p <- p + geom_line(aes(y = Depth_cm), lty = 1, col = "deepskyblue") #+ coord_cartesian(ylim=c(120, 125))
-
-  # adding the precip, transformed to match roughly the range of the WSE
-  p <- p + geom_line(aes(y = precip_acc_cm*7), lty = 3, col = "darkblue")
-  p
-
-  # now adding the secondary axis, following the example in the help file ?scale_y_continuous
-  # and, very important, reverting the above transformation
-  p <- p + scale_y_continuous(sec.axis = sec_axis(~./7, name = "Precipitation (cm)"))
-
-  # modifying colours and theme options
-  #p <- p + scale_colour_manual(labels = c("Water Surface Elevation (cm)", "Precipitation (cm)"), values = c("blue","red"))
-  p <- p + labs(y = "Depth (cm)",
-                x = "Date",
-                colour = NULL)
-  p <- p + ggtitle("Monthly Depth vs. Cumulative Precip")
-  p <- p + theme(plot.title = element_text(hjust = 0.5))
-  p  <- p + theme(legend.position = c(0.85, 0.85))
-  p <- p + facet_wrap(vars(Year, Month))
-  p
-  
-  #ggsave("figs/depth_precip_cum_monthly_ggplot.png")
+PHE_subbasins <- read_csv("data/PHE_subbasins.csv") 
 ```
 
