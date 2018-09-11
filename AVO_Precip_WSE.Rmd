@@ -210,6 +210,8 @@ pond_storms <- semi_join(y, storm_days, by = "Date")
 pond_storms$storm_event <- cumsum(c(1, diff.Date(pond_storms$Date)) >= 3)
 pond_storms
 
+write.csv(pond_storms, file = "output/pond_storms.csv")
+
  storm_stats <- pond_storms %>% 
   group_by(storm_event) %>% 
   summarise(precip_mm = (max(precip_acc_cm)-min(precip_acc_cm))*10, vol_gain = (max(VOLUME)-min(VOLUME)), start_date = min(Date), end_date = max(Date))
@@ -269,4 +271,21 @@ test <- pond_storms %>%
   group_by(storm_event) %>% 
   summarise(start_date = first(DateTime), end_date = last(DateTime))
 ```
+
+
+Parse Out Storm Event Tables
+```{r}
+#https://stackoverflow.com/questions/13629659/efficient-way-to-output-subset-of-data-frame-based-on-column
+# http://rprogramming.net/write-csv-in-r/
+## Need to figure out how to write to output folder
+storm_tables <- function(storm_event) {
+  write.csv(pond_storms[pond_storms$storm_event == storm_event, ]
+              , file = paste0("storm_event_", storm_event, ".csv")
+              )
+}
+
+lapply(unique(pond_storms$storm_event), storm_tables)
+
+```
+
 
