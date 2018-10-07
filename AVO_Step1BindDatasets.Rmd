@@ -1,0 +1,83 @@
+---
+title: "AVO Step 1: Bind Datasets"
+author: "Anna Fryjoff-Hung"
+date: "October 6, 2018"
+output: html_notebook
+---
+
+#### Description:
+stuff this does
+
+- Code based on ___ trial script and ____trial script
+
+# Load Required Packages 
+```{r}
+library(plyr)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(rvest)
+library(readr)
+
+```
+
+
+##### Step 1: Load in data 
+
+
+```{r}
+#Read in PT data
+PT <- read_csv("output/AVO_PTcleaned_1718.csv") %>% 
+  rename(WSE = Adjusted_WSE) %>%
+  mutate(WSE = round(WSE, digits = 2))
+#Adjust WSE to 2 decimel places.  Staff gage reads at cm level correction
+
+
+#Read in Precip Data
+PCP <- read_csv("output/CDECprecip_edited.csv") %>% 
+  rename(DateTime = datetime)
+
+#Read in Storage Capacity Data
+SC <- read_csv("data/AVO_StorageCapacity_1cm.csv") %>% 
+  rename(WSE = ELEVATION, VOLm3 = VOLUME, SAm = AREA) %>% 
+  mutate(WSE = round(WSE, digits = 2), 
+         VOLacft = VOLm3*0.000810714,
+         SAac = SAm*0.000247105)
+
+```
+
+
+
+##### Step 2: Bind data1 to data2 
+because using this column
+
+```{r}
+test <- PT %>% 
+  inner_join(PCP, by = "DateTime") %>% 
+  inner_join(SC, by = "WSE")
+```
+
+##### Step 3: Bind data2 to data3
+because using this column
+
+```{r}
+
+```
+
+#### Step 4: Determine Catchment Area Draining into AVO
+*add column for total precip volume vs. pond volume gain*
+```{r}
+# PHE_subbasins <- read_csv("data/PHE_subbasins.csv") 
+# pond_subs <- PHE_subbasins[c(-2,-5,-6,-7),]
+# AVO_catch <- sum(pond_subs$Shape_Area)
+# AVO_catch
+  
+```
+
+##### Write out to CSV
+Last version written on: oct. 6th 2018 
+
+```{r}
+
+```
+

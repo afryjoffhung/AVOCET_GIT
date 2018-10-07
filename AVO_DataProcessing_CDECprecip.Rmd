@@ -1,0 +1,43 @@
+---
+title: "AVO Data Processing: CDEC Precipitation"
+author: "Anna Fryjoff-Hung"
+date: "October 6, 2018"
+output: html_notebook
+---
+
+
+#Load Required Packages
+```{r}
+library(plyr)
+library(dplyr)
+library(CDECRetrieve)
+library(lubridate)
+library(rvest)
+```
+
+
+#Download CDEC Data
+```{r}
+# #PRECIPITATION, ACCUMULATED, INCHES
+# ### Need to convert to events
+# precip_acc <- cdec_query(id='ucm', sensor=2, interval='E', start='2017-11-06', end='2018-07-23')
+# precip_acc <- precip_acc[complete.cases(precip_acc), ]
+# names(precip_acc)[4]<-"precip_acc_in"
+# precip_acc$precip_event_in <- c(precip_acc$precip_acc_in[1], diff(precip_acc$precip_acc_in))
+# #Replace first column value and negative value to 0
+# precip_acc$precip_event_in <- if_else(precip_acc$precip_event_in<0, 0, precip_acc$precip_event_in)
+# precip_acc$precip_event_in <- if_else(precip_acc$precip_event_in == precip_acc$precip_event_in, 0, precip_acc$precip_event_in)
+# write_csv(precip_acc, "output/CDECprecip_edited.csv")
+
+#Piped
+precip_acc <- cdec_query(station ='ucm', sensor_num =2, dur_code ='E', start_date ='2017-11-06', end_date ='2018-07-23') %>% 
+  rename(precip_acc_in = parameter_value ) %>% 
+  select(-parameter_cd) %>% 
+  filter(complete.cases(.)) %>%
+  mutate(precip_event_in = c(precip_acc_in[1], diff(precip_acc_in)),
+         precip_event_in = if_else(precip_acc_in == precip_event_in, 0, precip_event_in),
+         precip_event_mm = 25.4*precip_event_in) %>% 
+  write_csv("output/CDECprecip_edited.csv")
+  
+```
+

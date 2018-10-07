@@ -207,7 +207,7 @@ names(storm_days)[1] <- "Date"
 #filter pond data to storm events
 pond_storms <- semi_join(y, storm_days, by = "Date")
 # Create Storm Event Groupings based on consecutive days https://stackoverflow.com/questions/37342412/r-find-dates-consecutive 
-pond_storms$storm_event <- cumsum(c(1, diff.Date(pond_storms$Date)) >= 3)
+pond_storms$storm_event <- cumsum(c(1, diff.Date(pond_storms$Date)) >= 2)
 pond_storms
 
 write.csv(pond_storms, file = "output/pond_storms.csv")
@@ -217,6 +217,7 @@ write.csv(pond_storms, file = "output/pond_storms.csv")
   summarise(precip_mm = (max(precip_acc_cm)-min(precip_acc_cm))*10, vol_gain = (max(VOLUME)-min(VOLUME)), start_date = min(Date), end_date = max(Date))
  
  storm_stats$duration <- paste(storm_stats$start_date, storm_stats$end_date, sep = "-")
+ write.csv(storm_stats, file = "output/storm_stats.csv")
 ```
 
 
