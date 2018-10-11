@@ -1,11 +1,11 @@
 ---
-title: "AVO Data Processing: Pressure Transducers"
+title: "AVO Data Processing: Pressure Transducers for WY2017"
 author: "Anna Fryjoff-Hung"
-date: "October 6, 2018"
+date: "October 11, 2018"
 output: html_notebook
 ---
 
-#Wrangle PT Data for Avocet from 11-6-2017-8-10-2018
+#Wrangle PT Datasets for Avocet WY2017
 - Import individual PT datasets
 - Adjust PT depths and calculate WSE
 - Combine datasets
@@ -14,10 +14,9 @@ output: html_notebook
 PT Elevations for Adjusted WSE
 3/9/17-7/12/17 = 122.54
 - corrected with reference water level: 1.12m
-7/13/17-9/29/17 = 121.83
+7/12/17-9/29/17 = 121.83
 - corrected with reference water level: 1.01m - 7/12 @12:45pm
-11/6/17-8/10/18 = 121.47
-- corrected with terrestrial PT
+
 
 ##Load Required Packages
 ```{r}
@@ -47,67 +46,92 @@ test <- read_csv("data/20180810_AVOCET_corrected_24.csv")[,1:6] %>%
 ```
 
 
-###Import first half of PT Data 11/6/17-3/11/2018
+###Import first half of PT Data 3/9/17-7/12/17
 ```{r}
 #Import first half of PT Data 11/6/17-3/11/2018
-x <- read_csv("data/20180311_AVOCET_corrected_24.csv")[,1:6]
-names(x) <- c("Order","DateTime","PT_kPa","WaterTemp_c","Baro_kPa","PT_Depth_m")
+x <- read_csv("data/20170712_AVOCET_corrected_24.csv")[,1:5]
+names(x) <- c("Order","DateTime","PT_kPa","WaterTemp_c","PT_Depth_m")
 #x <- dplyr::rename(x, Order = `#`, DateTime = 2, PT_kPa = 3, WaterTemp_c = 4, Baro_kPa = 5, PT_Depth_m = 6)
 x <- x[complete.cases(x),]
 x <- x[x$PT_Depth_m >= 0.1, ]
 #PT suspended ~5cm above bottom of staff gage - adjust by adding 0.05 to recorded depths
-x$Adjusted_PTDepth <- x$PT_Depth_m+0.05
+x$Adjusted_PTDepth <- x$PT_Depth_m #+0.05
 x$DateTime <- mdy_hms(x$DateTime)
 #Add PT depths to PT elevation to get water surface elevation of pond 
-x$Adjusted_WSE <- x$Adjusted_PTDepth + 121.472
-AVO_PThobo_0311_cleaned <- x
+x$Adjusted_WSE <- round((x$Adjusted_PTDepth + 122.54), digits = 2)
+AVO_PThobo_0712_cleaned <- x
+write_csv(AVO_PThobo_0712_cleaned,  "output/AVO_PTcleaned_WY17.csv")
 
 ```
 
-###Import second half of PT Data 3/11/2018 - 8/10/2018
+##Plot Dataset
 ```{r}
-#Import second half of PT Data 3/11/2018 - 8/10/2018
-x <- read_csv("data/20180810_AVOCET_corrected_24.csv")[,1:6]
-names(x) <- c("Order","DateTime","PT_kPa","WaterTemp_c","Baro_kPa","PT_Depth_m")
-#x <- dplyr::rename(x, Order = `#`, DateTime = 2, PT_kPa = 3, WaterTemp_c = 4, Baro_kPa = 5, PT_Depth_m = 6)
-x <- x[complete.cases(x),]
-x <- x[x$PT_Depth_m >= 0.1, ]
-#PT suspended ~5cm above bottom of staff gage - adjust by adding 0.05 to recorded depths
-x$Adjusted_PTDepth <- x$PT_Depth_m+0.05
-x$DateTime <- mdy_hms(x$DateTime)
-#Add PT depths to PT elevation to get water surface elevation of pond 
-x$Adjusted_WSE <- x$Adjusted_PTDepth + 121.472
-AVO_PThobo_0810_cleaned <- x
-
-```
-
-##Combine Datasets
-```{r}
-#Combine Datasets
-
-AVO_PTcleaned_1718 <- rbind(AVO_PThobo_0311_cleaned, AVO_PThobo_0810_cleaned)
-write_csv(AVO_PTcleaned_1718,  "output/AVO_PTcleaned_1718.csv")
-```
-
-##Plot Combined Dataset
-```{r}
-ggplot(AVO_PTcleaned_1718, aes(x = DateTime, y = Adjusted_PTDepth))+
+ggplot(AVO_PThobo_0712_cleaned, aes(x = DateTime, y = Adjusted_WSE))+
   geom_line()
 ```
 
 ##Import PT Visual Check Data
 ```{r}
 ##Import PT Visual Check Data
-x <- read_csv("data/AVO_PTCheck_1718.csv")
+x <- read_csv("data/AVO_PTCheck_WY2017.csv")[1:5,1:2]
 x$DateTime <- mdy_hm(x$DateTime)
-AVO_PTfieldcheck_1718 <- x
+AVO_PTfieldcheck_WY17 <- x
 ```
 
 ###Join and compare observed vs measured values
 ```{r}
-AVO_PTjoin <- merge(x = AVO_PTfieldcheck_1718, y = AVO_PTcleaned_1718, by = "DateTime", all.x = TRUE)
+AVO_PTjoin <- merge(x = AVO_PTfieldcheck_WY17, y = AVO_PThobo_0712_cleaned, by = "DateTime", all.x = TRUE)
 AVO_PTjoin$Obs_Rec_Diff <- (AVO_PTjoin$Observed_Depth - AVO_PTjoin$Adjusted_PTDepth)
 AVO_PTjoin_compare <- AVO_PTjoin
-write_csv(AVO_PTjoin_compare, "output/AVO_PTcompare_1718.csv")
+write_csv(AVO_PTjoin_compare, "output/AVO_PTcompare_WY17.csv")
+```
+
+###Import second half of PT Data 7/12/17-9/29/17
+```{r eval = FALSE}
+#Import second half of PT Data 3/11/2018 - 8/10/2018
+x <- read_csv("data/20170929_AVOCET_corrected_24.csv")[,1:5]
+names(x) <- c("Order","DateTime","PT_kPa","WaterTemp_c","PT_Depth_m")
+#x <- dplyr::rename(x, Order = `#`, DateTime = 2, PT_kPa = 3, WaterTemp_c = 4, Baro_kPa = 5, PT_Depth_m = 6)
+x <- x[complete.cases(x),]
+x <- x[x$PT_Depth_m >= 0.1, ]
+#PT suspended ~5cm above bottom of staff gage - adjust by adding 0.05 to recorded depths
+x$Adjusted_PTDepth <- x$PT_Depth_m#+0.05
+x$DateTime <- mdy_hms(x$DateTime)
+#Add PT depths to PT elevation to get water surface elevation of pond 
+x$Adjusted_WSE <- round((x$Adjusted_PTDepth + 121.83), digits = 2)
+AVO_PThobo_0929_cleaned <- x
+
+```
+
+##Combine Datasets
+```{r eval = FALSE}
+#Combine Datasets
+
+AVO_PTcleaned_WY17 <- rbind(AVO_PThobo_0712_cleaned, AVO_PThobo_0929_cleaned)
+#write_csv(AVO_PTcleaned_WY17,  "output/AVO_PTcleaned_WY17.csv")
+```
+
+##Plot Combined Dataset
+```{r eval = FALSE}
+ggplot(AVO_PTcleaned_WY17, aes(x = DateTime, y = Adjusted_WSE))+
+  geom_line()
+```
+
+*Issue with depth mismatch after PT relocated - no longer conbining datasets*
+
+##Import PT Visual Check Data
+```{r eval = FALSE}
+##Import PT Visual Check Data
+x <- read_csv("data/AVO_PTCheck_WY2017.csv")[1:16,1:2]
+x$DateTime <- mdy_hm(x$DateTime)
+AVO_PTfieldcheck_WY17 <- x
+```
+
+###Join and compare observed vs measured values
+```{r eval = FALSE}
+AVO_PTjoin <- merge(x = AVO_PTfieldcheck_WY17, y = AVO_PTcleaned_WY17, by = "DateTime", all.x = TRUE)
+AVO_PTjoin$Obs_Rec_Diff <- (AVO_PTjoin$Observed_Depth - AVO_PTjoin$Adjusted_PTDepth)
+AVO_PTjoin_compare <- AVO_PTjoin
+#write_csv(AVO_PTjoin_compare, "output/AVO_PTcompare_1718.csv")
 ```
 

@@ -36,8 +36,8 @@ precip_acc <- cdec_query(station ='ucm', sensor_num =2, dur_code ='E', start_dat
   filter(complete.cases(.)) %>%
   mutate(precip_event_in = c(precip_acc_in[1], diff(precip_acc_in)),
          precip_event_in = if_else(precip_acc_in == precip_event_in, 0, precip_event_in),
-         precip_event_mm = 25.4*precip_event_in) %>% 
-  write_csv("output/CDECprecip_edited.csv")
+         precip_event_mm = 25.4*precip_event_in) #%>% 
+  #write_csv("output/CDECprecip_edited.csv")
   
 ```
 
