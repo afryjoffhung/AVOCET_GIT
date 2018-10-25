@@ -7,7 +7,12 @@ output: html_notebook
 
 #Load Required Packages
 ```{r}
-
+library(plyr)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(rvest)
+library(readr)
 ```
 
 
@@ -45,6 +50,32 @@ write.csv(pond_storms, file = "output/pond_storms.csv")
  storm_stats$duration <- paste(storm_stats$start_date, storm_stats$end_date, sep = "-")
  write.csv(storm_stats, file = "output/storm_stats.csv")
 ```
+
+#Add more columns to stormstats
+# Connect with chunk above!!!
+```{r}
+s <- read.csv("output/storm_stats.csv") %>% 
+  mutate(pond_vol_gain_acft = vol_gain*0.000810714, 
+         vol_gain_pct_pond = 100*(vol_gain/79525.89), 
+         vol_gain_pct_catch = 100*(vol_gain/(703367.5*0.001*precip_mm))) %>% 
+  rename(pond_vol_gain_m3 = vol_gain) %>% 
+  mutate_if(is.numeric, round, 2) 
+s
+
+write_csv(s, "output/20181025_storm_stats.csv")
+
+t <- s %>% 
+  filter(precip_mm>1)
+
+write_csv(t, "output/20181025_storm_stats_filterprecip.csv")
+
+u <- t %>% 
+  filter(vol_gain_pct_pond>1)
+  
+write_csv(u, "output/20181025_storm_stats_filterpctpond.csv")
+ 
+```
+
 
 #Parse Out Storm Event Tables
 ```{r}

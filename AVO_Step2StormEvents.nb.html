@@ -179,9 +179,129 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
+<div id="load-required-packages" class="section level1">
+<h1>Load Required Packages</h1>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShwbHlyKVxubGlicmFyeShkcGx5cilcbmxpYnJhcnkoZ2dwbG90MilcbmxpYnJhcnkobHVicmlkYXRlKVxubGlicmFyeShydmVzdClcbmxpYnJhcnkocmVhZHIpXG5gYGAifQ== -->
+<pre class="r"><code>library(plyr)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(rvest)
+library(readr)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDjpLzjuLFyZWFkcuOkvOO4siB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuMy4zXG5BdHRhY2hpbmcgcGFja2FnZTog46S847ixcmVhZHLjpLzjuLJcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20g46S847ixcGFja2FnZTpydmVzdOOkvOO4sjpcblxuICAgIGd1ZXNzX2VuY29kaW5nXG4ifQ== -->
+<pre><code>package 㤼㸱readr㤼㸲 was built under R version 3.3.3
+Attaching package: 㤼㸱readr㤼㸲
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkFWTyBTdGVwIDI6IFN0b3JtIEV2ZW50cyINCmF1dGhvcjogIkFubmEgRnJ5am9mZi1IdW5nIg0KZGF0ZTogIk9jdG9iZXIgNiwgMjAxOCINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCg==</div>
+The following object is masked from 㤼㸱package:rvest㤼㸲:
+
+    guess_encoding</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="load-combined-ptwsestorage-dataset" class="section level1">
+<h1>Load Combined PT/WSE/Storage Dataset</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="filtering-for-storm-events-by-threshold-and-assigning-event-codes" class="section level1">
+<h1>Filtering for Storm Events by Threshold and Assigning Event Codes</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jQ3JlYXRlIHRocmVzaG9sZCB0byBmaW5kIGRheXMgd2l0aCBwcmVjaXAgZXZlbnRzXG50aHJlc2hvbGQgPC0geSAlPiUgXG4gIGZpbHRlcihwcmVjaXBfZXZlbnRfY20gPiAwLjApICU+JVxuICBncm91cF9ieShEYXRlKSAlPiVcbiAgbXV0YXRlKGNvdW50ID0gbigpKVxuXG4jQ3JlYXRlIHZlY3RvciBvZiB1bmlxdWUgZGF0ZXMgdG8gaWRlbnRpZnkgc3Rvcm0gZXZlbnRzIFxuc3Rvcm1fZGF5cyA8LSB1bmlxdWUodGhyZXNob2xkJERhdGUpXG5zdG9ybV9kYXlzIDwtIGFzX3RpYmJsZShzdG9ybV9kYXlzKVxubmFtZXMoc3Rvcm1fZGF5cylbMV0gPC0gXCJEYXRlXCJcblxuI2ZpbHRlciBwb25kIGRhdGEgdG8gc3Rvcm0gZXZlbnRzXG5wb25kX3N0b3JtcyA8LSBzZW1pX2pvaW4oeSwgc3Rvcm1fZGF5cywgYnkgPSBcIkRhdGVcIilcbiMgQ3JlYXRlIFN0b3JtIEV2ZW50IEdyb3VwaW5ncyBiYXNlZCBvbiBjb25zZWN1dGl2ZSBkYXlzIGh0dHBzOi8vc3RhY2tvdmVyZmxvdy5jb20vcXVlc3Rpb25zLzM3MzQyNDEyL3ItZmluZC1kYXRlcy1jb25zZWN1dGl2ZSBcbnBvbmRfc3Rvcm1zJHN0b3JtX2V2ZW50IDwtIGN1bXN1bShjKDEsIGRpZmYuRGF0ZShwb25kX3N0b3JtcyREYXRlKSkgPj0gMilcbnBvbmRfc3Rvcm1zXG5cbndyaXRlLmNzdihwb25kX3N0b3JtcywgZmlsZSA9IFwib3V0cHV0L3BvbmRfc3Rvcm1zLmNzdlwiKVxuXG4gc3Rvcm1fc3RhdHMgPC0gcG9uZF9zdG9ybXMgJT4lIFxuICBncm91cF9ieShzdG9ybV9ldmVudCkgJT4lIFxuICBzdW1tYXJpc2UocHJlY2lwX21tID0gKG1heChwcmVjaXBfYWNjX2NtKS1taW4ocHJlY2lwX2FjY19jbSkpKjEwLCB2b2xfZ2FpbiA9IChtYXgoVk9MVU1FKS1taW4oVk9MVU1FKSksIHN0YXJ0X2RhdGUgPSBtaW4oRGF0ZSksIGVuZF9kYXRlID0gbWF4KERhdGUpKVxuIFxuIHN0b3JtX3N0YXRzJGR1cmF0aW9uIDwtIHBhc3RlKHN0b3JtX3N0YXRzJHN0YXJ0X2RhdGUsIHN0b3JtX3N0YXRzJGVuZF9kYXRlLCBzZXAgPSBcIi1cIilcbiB3cml0ZS5jc3Yoc3Rvcm1fc3RhdHMsIGZpbGUgPSBcIm91dHB1dC9zdG9ybV9zdGF0cy5jc3ZcIilcbmBgYCJ9 -->
+<pre class="r"><code>
+#Create threshold to find days with precip events
+threshold &lt;- y %&gt;% 
+  filter(precip_event_cm &gt; 0.0) %&gt;%
+  group_by(Date) %&gt;%
+  mutate(count = n())
+
+#Create vector of unique dates to identify storm events 
+storm_days &lt;- unique(threshold$Date)
+storm_days &lt;- as_tibble(storm_days)
+names(storm_days)[1] &lt;- &quot;Date&quot;
+
+#filter pond data to storm events
+pond_storms &lt;- semi_join(y, storm_days, by = &quot;Date&quot;)
+# Create Storm Event Groupings based on consecutive days https://stackoverflow.com/questions/37342412/r-find-dates-consecutive 
+pond_storms$storm_event &lt;- cumsum(c(1, diff.Date(pond_storms$Date)) &gt;= 2)
+pond_storms
+
+write.csv(pond_storms, file = &quot;output/pond_storms.csv&quot;)
+
+ storm_stats &lt;- pond_storms %&gt;% 
+  group_by(storm_event) %&gt;% 
+  summarise(precip_mm = (max(precip_acc_cm)-min(precip_acc_cm))*10, vol_gain = (max(VOLUME)-min(VOLUME)), start_date = min(Date), end_date = max(Date))
+ 
+ storm_stats$duration &lt;- paste(storm_stats$start_date, storm_stats$end_date, sep = &quot;-&quot;)
+ write.csv(storm_stats, file = &quot;output/storm_stats.csv&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="add-more-columns-to-stormstats" class="section level1">
+<h1>Add more columns to stormstats</h1>
+</div>
+<div id="connect-with-chunk-above" class="section level1">
+<h1>Connect with chunk above!!!</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucyA8LSByZWFkLmNzdihcIm91dHB1dC9zdG9ybV9zdGF0cy5jc3ZcIikgJT4lIFxuICBtdXRhdGUocG9uZF92b2xfZ2Fpbl9hY2Z0ID0gdm9sX2dhaW4qMC4wMDA4MTA3MTQsIFxuICAgICAgICAgdm9sX2dhaW5fcGN0X3BvbmQgPSAxMDAqKHZvbF9nYWluLzc5NTI1Ljg5KSwgXG4gICAgICAgICB2b2xfZ2Fpbl9wY3RfY2F0Y2ggPSAxMDAqKHZvbF9nYWluLyg3MDMzNjcuNSowLjAwMSpwcmVjaXBfbW0pKSkgJT4lIFxuICByZW5hbWUocG9uZF92b2xfZ2Fpbl9tMyA9IHZvbF9nYWluKSAlPiUgXG4gIG11dGF0ZV9pZihpcy5udW1lcmljLCByb3VuZCwgMikgXG5zXG5gYGAifQ== -->
+<pre class="r"><code>s &lt;- read.csv(&quot;output/storm_stats.csv&quot;) %&gt;% 
+  mutate(pond_vol_gain_acft = vol_gain*0.000810714, 
+         vol_gain_pct_pond = 100*(vol_gain/79525.89), 
+         vol_gain_pct_catch = 100*(vol_gain/(703367.5*0.001*precip_mm))) %&gt;% 
+  rename(pond_vol_gain_m3 = vol_gain) %&gt;% 
+  mutate_if(is.numeric, round, 2) 
+s</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6MTAsIm5yb3ciOjI0fSwicmRmIjoiSDRzSUFBQUFBQUFBQnRWWFRXd2JSUlRlMkhIU2JNaFBReHlNaVBwRFNKc2kxbmpYNjU5SVZCNkpTa1VvQjFvTzVGREpXV3ludGVLL3JqY0ZCU3FxU2oyaUhMaEFMeHhhSWFTaUhqamx3cVVjeXFFdEZDVEtpUkpPRVFHcHFrQkNQUlJtNXIyWjljNkFGQ1JBc05MazIzbHYzcHYzM256amZUbCtaTkV4RjAzRE1HSkdQQjR6WW5INjJoK2pmL3FNZm1PSTRldUdFWCtVdnJCRm8zU2tTdmNNL2hBRGNSZmlPT0lrWWdweEduRWY0cE9JVHlFZVFKeERmQnJ4R2NRMFlnYlJSblFRczRndVlnNHhqMWhBTEJyaTRYbUl5ZjgxSDVGSDZRdVVIOXc4ZW5WeWJaT2tsdmxEeGc5M0x0MHhENU9wRTNPL1hGcy9RWjdnMDlQa3lEdFo5Z2c3YVQrNnhoeThJZWNEeDdZdjdOazRMallqY3g3NGYvNXo3cEE0Tjloek0vUnI4L1ZrUDEvMkFubXVDL3RzZ1I4eSs0ckpJcEw3L2lyOTh6eEk4enI0UFZ1bTRtTS9rck5Gdm9DOHVRajdyRnhHeER6Zi9XNkRMdGhMR3ZmWHFlR25wSEVEOGtTVWNUZmVoM2hXNEdESjJnK3cvb09mWm5qY2J3OVQ2RnlXKzk3OCtBQ3YzL21MdkI3a28ra0Z2cS8vQU9wNi9pNzQ4MS9pQlNPbkhlNlAzcE1SQTNqVlo3QUxSUVYwOU5PUm9HT0Fqa0U2V0JEc1lySDdORXpISTNTTVlBM0c2QmluWXpjZEUzU3dlOGZZbDZSamlvN0h3SC9rZ2c0MGFtZHFqUzVhcGxCcU9obTdZTm0ybFpsWEpYWmVsVGlGcU1TeG5FeVBwR2hscUI5WGsrUTFTVkdWMkk0bTBheHN6Y3JSckp4Y1ZFSWp6R29TeFhPV0dxb1NPNnRKTkNzMWR5cFJjbmUxM0YwdFUxZnpuS05CcWhLYVYvUTBFNVdHMXhXSEtZOTQyYXNFYlorK1BmeDNTUmI3N1MvUXF2QlAwY3JXckhaRXEvbS9pVllGalZZNmlWeE5vbG1wdS84aHJRbzdvRlZoNTdTS2kvUDc3ekVwR1RMSjBrZ2xsWGJlMHZpVkRQbGxhVlJMaGxTek5OWWxROVpaR2dGRFpkN1N1QmdxaTVaR3kyUklTMHRqYUtnTTNkcWFXN3ZIN2J5cWRFSzNqdWJXeVlYS1hGVEoyR3hweEE2VitWQlppQ3F6M0oxS2Q2bTBzMUpwdTVveUh5bzF0M0FxMGZzUUt0MVFxYmgxdzFQcHVTVlNLUXZ2YW9WM3c0QmNMYUFjVDE2OVJsSXBhN3ZURzRVTjJXZlEySlMrVWZBTzZ4dU9YaTFkNTMyUUtmSG5TN3dCa1hZS0d2aEl1YkQ3R2h1OU9NNjNjQjN1UitZK1pIM1FvZEszRzlCSURVSWpLQnV3dXppL0Jmb1M5RTJIWkI1ZlphR0IreDRhcmhDaHNTemQzdVlOazBBaTR2eHluVHRXMFZEMXQ2RlJMRzFpd3pqQzNHeGZLTjNIZUhBL2t1WGl2U0kvTXNITE9DbnJ1cVhVRitzaThpQkxWM2dlWkFyck5ZdU42N09mWUlNTSs1SUphSURKRk82emxJWEdjR2tQMk8ySGVvZzh5TUVGN3VldGV6aWZoTGpJN0JnMHN0TVFONWxCdnk5ZWc4Wno1ajMyWENUMkE1QXZ2QXp4N1hzYzVOVnowRkRQWCtGMVZWdUVsdGVzaVJiQkZQK21MZUxMY0pleXNWbW1QV0VyUU5GUXg2OVY2cDF5czRtQzhVNjdWUzJmYVRmS0o3MTZxOXlVMzdOdTRQbEJ1ZW9GTlpUc3F0R0Z2ZlBxcXU4RjlYWUw1eE5SVDE1bFdXeTZXd283bGFETWxnbVRpS0xpQlpWVFNvSkRmdnUxdEVpU2ZXdGk1NkRBcVQrNWd5YU4wRXN2KzlRRTdtSEUzV0M3d3lLbXptTHNBNVZRalB0OFJUQzIybUtiVjYzS3FkWFdpbFV3NE9QWGg2YytndStwbm5jVHR1d1hnU1hFajBPdGRiTGVFc1ZMTkx4WGF3MmNqTklrZVk3cGpsK1hSMlZTYVRjZHRBTlByRE1yN1lhUXdHL013OThCam5BdnlyVVBBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["storm_event"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["precip_mm"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["pond_vol_gain_m3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["start_date"],"name":[5],"type":["fctr"],"align":["left"]},{"label":["end_date"],"name":[6],"type":["fctr"],"align":["left"]},{"label":["duration"],"name":[7],"type":["fctr"],"align":["left"]},{"label":["pond_vol_gain_acft"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["vol_gain_pct_pond"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["vol_gain_pct_catch"],"name":[10],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"0","3":"0.25","4":"238.23","5":"2017-11-09","6":"2017-11-09","7":"2017-11-09-2017-11-09","8":"0.19","9":"0.30","10":"133.35"},{"1":"2","2":"1","3":"11.94","4":"469.97","5":"2017-11-16","6":"2017-11-17","7":"2017-11-16-2017-11-17","8":"0.38","9":"0.59","10":"5.60"},{"1":"3","2":"2","3":"6.10","4":"467.52","5":"2017-11-27","6":"2017-11-27","7":"2017-11-27-2017-11-27","8":"0.38","9":"0.59","10":"10.90"},{"1":"4","2":"3","3":"4.06","4":"453.55","5":"2017-12-20","6":"2017-12-20","7":"2017-12-20-2017-12-20","8":"0.37","9":"0.57","10":"15.87"},{"1":"5","2":"4","3":"5.59","4":"221.15","5":"2018-01-04","6":"2018-01-04","7":"2018-01-04-2018-01-04","8":"0.18","9":"0.28","10":"5.63"},{"1":"6","2":"5","3":"6.86","4":"223.04","5":"2018-01-06","6":"2018-01-06","7":"2018-01-06-2018-01-06","8":"0.18","9":"0.28","10":"4.62"},{"1":"7","2":"6","3":"41.15","4":"1592.18","5":"2018-01-08","6":"2018-01-10","7":"2018-01-08-2018-01-10","8":"1.29","9":"2.00","10":"5.50"},{"1":"8","2":"7","3":"0.25","4":"231.58","5":"2018-01-12","6":"2018-01-12","7":"2018-01-12-2018-01-12","8":"0.19","9":"0.29","10":"129.62"},{"1":"9","2":"8","3":"0.25","4":"230.38","5":"2018-01-16","6":"2018-01-16","7":"2018-01-16-2018-01-16","8":"0.19","9":"0.29","10":"128.95"},{"1":"10","2":"9","3":"3.81","4":"230.38","5":"2018-01-18","6":"2018-01-19","7":"2018-01-18-2018-01-19","8":"0.19","9":"0.29","10":"8.60"},{"1":"11","2":"10","3":"0.25","4":"0.00","5":"2018-01-22","6":"2018-01-22","7":"2018-01-22-2018-01-22","8":"0.00","9":"0.00","10":"0.00"},{"1":"12","2":"11","3":"2.79","4":"228.99","5":"2018-01-25","6":"2018-01-25","7":"2018-01-25-2018-01-25","8":"0.19","9":"0.29","10":"11.65"},{"1":"13","2":"12","3":"0.00","4":"216.25","5":"2018-02-23","6":"2018-02-23","7":"2018-02-23-2018-02-23","8":"0.18","9":"0.27","10":"Inf"},{"1":"14","2":"13","3":"12.19","4":"430.66","5":"2018-02-26","6":"2018-02-27","7":"2018-02-26-2018-02-27","8":"0.35","9":"0.54","10":"5.02"},{"1":"15","2":"14","3":"39.62","4":"2934.57","5":"2018-03-01","6":"2018-03-03","7":"2018-03-01-2018-03-03","8":"2.38","9":"3.69","10":"10.53"},{"1":"16","2":"15","3":"18.80","4":"929.48","5":"2018-03-13","6":"2018-03-14","7":"2018-03-13-2018-03-14","8":"0.75","9":"1.17","10":"7.03"},{"1":"17","2":"16","3":"6.86","4":"469.97","5":"2018-03-16","6":"2018-03-17","7":"2018-03-16-2018-03-17","8":"0.38","9":"0.59","10":"9.74"},{"1":"18","2":"17","3":"40.39","4":"15204.30","5":"2018-03-20","6":"2018-03-22","7":"2018-03-20-2018-03-22","8":"12.33","9":"19.12","10":"53.52"},{"1":"19","2":"18","3":"8.64","4":"595.36","5":"2018-03-24","6":"2018-03-24","7":"2018-03-24-2018-03-24","8":"0.48","9":"0.75","10":"9.80"},{"1":"20","2":"19","3":"28.45","4":"3598.15","5":"2018-04-06","6":"2018-04-07","7":"2018-04-06-2018-04-07","8":"2.92","9":"4.52","10":"17.98"},{"1":"21","2":"20","3":"0.76","4":"303.65","5":"2018-04-12","6":"2018-04-12","7":"2018-04-12-2018-04-12","8":"0.25","9":"0.38","10":"56.65"},{"1":"22","2":"21","3":"10.67","4":"603.96","5":"2018-04-16","6":"2018-04-17","7":"2018-04-16-2018-04-17","8":"0.49","9":"0.76","10":"8.05"},{"1":"23","2":"22","3":"0.25","4":"293.03","5":"2018-05-02","6":"2018-05-02","7":"2018-05-02-2018-05-02","8":"0.24","9":"0.37","10":"164.02"},{"1":"24","2":"23","3":"1.52","4":"275.16","5":"2018-05-25","6":"2018-05-25","7":"2018-05-25-2018-05-25","8":"0.22","9":"0.35","10":"25.67"}],"options":{"columns":{"min":{},"max":[10],"total":[10]},"rows":{"min":[10],"max":[10],"total":[24]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud3JpdGVfY3N2KHMsIFwib3V0cHV0LzIwMTgxMDI1X3N0b3JtX3N0YXRzLmNzdlwiKVxudCA8LSBzICU+JSBcbiAgZmlsdGVyKHByZWNpcF9tbT4xKVxud3JpdGVfY3N2KHQsIFwib3V0cHV0LzIwMTgxMDI1X3N0b3JtX3N0YXRzX2ZpbHRlcnByZWNpcC5jc3ZcIilcbnUgPC0gdCAlPiUgXG4gIGZpbHRlcih2b2xfZ2Fpbl9wY3RfcG9uZD4xKVxuICBcbndyaXRlX2Nzdih1LCBcIm91dHB1dC8yMDE4MTAyNV9zdG9ybV9zdGF0c19maWx0ZXJwY3Rwb25kLmNzdlwiKVxuIFxuYGBgIn0= -->
+<pre class="r"><code>write_csv(s, &quot;output/20181025_storm_stats.csv&quot;)
+t &lt;- s %&gt;% 
+  filter(precip_mm&gt;1)
+write_csv(t, &quot;output/20181025_storm_stats_filterprecip.csv&quot;)
+u &lt;- t %&gt;% 
+  filter(vol_gain_pct_pond&gt;1)
+  
+write_csv(u, &quot;output/20181025_storm_stats_filterpctpond.csv&quot;)
+ </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="parse-out-storm-event-tables" class="section level1">
+<h1>Parse Out Storm Event Tables</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2h0dHBzOi8vc3RhY2tvdmVyZmxvdy5jb20vcXVlc3Rpb25zLzEzNjI5NjU5L2VmZmljaWVudC13YXktdG8tb3V0cHV0LXN1YnNldC1vZi1kYXRhLWZyYW1lLWJhc2VkLW9uLWNvbHVtblxuIyBodHRwOi8vcnByb2dyYW1taW5nLm5ldC93cml0ZS1jc3YtaW4tci9cbiMjIE5lZWQgdG8gZmlndXJlIG91dCBob3cgdG8gd3JpdGUgdG8gb3V0cHV0IGZvbGRlclxuc3Rvcm1fdGFibGVzIDwtIGZ1bmN0aW9uKHN0b3JtX2V2ZW50KSB7XG4gIHdyaXRlLmNzdihwb25kX3N0b3Jtc1twb25kX3N0b3JtcyRzdG9ybV9ldmVudCA9PSBzdG9ybV9ldmVudCwgXVxuICAgICAgICAgICAgICAsIGZpbGUgPSBwYXN0ZTAoXCJzdG9ybV9ldmVudF9cIiwgc3Rvcm1fZXZlbnQsIFwiLmNzdlwiKVxuICAgICAgICAgICAgICApXG59XG5cbmxhcHBseSh1bmlxdWUocG9uZF9zdG9ybXMkc3Rvcm1fZXZlbnQpLCBzdG9ybV90YWJsZXMpXG5cbmBgYCJ9 -->
+<pre class="r"><code>#https://stackoverflow.com/questions/13629659/efficient-way-to-output-subset-of-data-frame-based-on-column
+# http://rprogramming.net/write-csv-in-r/
+## Need to figure out how to write to output folder
+storm_tables &lt;- function(storm_event) {
+  write.csv(pond_storms[pond_storms$storm_event == storm_event, ]
+              , file = paste0(&quot;storm_event_&quot;, storm_event, &quot;.csv&quot;)
+              )
+}
+
+lapply(unique(pond_storms$storm_event), storm_tables)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkFWTyBTdGVwIDI6IFN0b3JtIEV2ZW50cyINCmF1dGhvcjogIkFubmEgRnJ5am9mZi1IdW5nIg0KZGF0ZTogIk9jdG9iZXIgNiwgMjAxOCINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCiNMb2FkIFJlcXVpcmVkIFBhY2thZ2VzDQpgYGB7cn0NCmxpYnJhcnkocGx5cikNCmxpYnJhcnkoZHBseXIpDQpsaWJyYXJ5KGdncGxvdDIpDQpsaWJyYXJ5KGx1YnJpZGF0ZSkNCmxpYnJhcnkocnZlc3QpDQpsaWJyYXJ5KHJlYWRyKQ0KYGBgDQoNCg0KI0xvYWQgQ29tYmluZWQgUFQvV1NFL1N0b3JhZ2UgRGF0YXNldA0KYGBge3J9DQoNCmBgYA0KDQojRmlsdGVyaW5nIGZvciBTdG9ybSBFdmVudHMgYnkgVGhyZXNob2xkIGFuZCBBc3NpZ25pbmcgRXZlbnQgQ29kZXMNCmBgYHtyfQ0KDQojQ3JlYXRlIHRocmVzaG9sZCB0byBmaW5kIGRheXMgd2l0aCBwcmVjaXAgZXZlbnRzDQp0aHJlc2hvbGQgPC0geSAlPiUgDQogIGZpbHRlcihwcmVjaXBfZXZlbnRfY20gPiAwLjApICU+JQ0KICBncm91cF9ieShEYXRlKSAlPiUNCiAgbXV0YXRlKGNvdW50ID0gbigpKQ0KDQojQ3JlYXRlIHZlY3RvciBvZiB1bmlxdWUgZGF0ZXMgdG8gaWRlbnRpZnkgc3Rvcm0gZXZlbnRzIA0Kc3Rvcm1fZGF5cyA8LSB1bmlxdWUodGhyZXNob2xkJERhdGUpDQpzdG9ybV9kYXlzIDwtIGFzX3RpYmJsZShzdG9ybV9kYXlzKQ0KbmFtZXMoc3Rvcm1fZGF5cylbMV0gPC0gIkRhdGUiDQoNCiNmaWx0ZXIgcG9uZCBkYXRhIHRvIHN0b3JtIGV2ZW50cw0KcG9uZF9zdG9ybXMgPC0gc2VtaV9qb2luKHksIHN0b3JtX2RheXMsIGJ5ID0gIkRhdGUiKQ0KIyBDcmVhdGUgU3Rvcm0gRXZlbnQgR3JvdXBpbmdzIGJhc2VkIG9uIGNvbnNlY3V0aXZlIGRheXMgaHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMzczNDI0MTIvci1maW5kLWRhdGVzLWNvbnNlY3V0aXZlIA0KcG9uZF9zdG9ybXMkc3Rvcm1fZXZlbnQgPC0gY3Vtc3VtKGMoMSwgZGlmZi5EYXRlKHBvbmRfc3Rvcm1zJERhdGUpKSA+PSAyKQ0KcG9uZF9zdG9ybXMNCg0Kd3JpdGUuY3N2KHBvbmRfc3Rvcm1zLCBmaWxlID0gIm91dHB1dC9wb25kX3N0b3Jtcy5jc3YiKQ0KDQogc3Rvcm1fc3RhdHMgPC0gcG9uZF9zdG9ybXMgJT4lIA0KICBncm91cF9ieShzdG9ybV9ldmVudCkgJT4lIA0KICBzdW1tYXJpc2UocHJlY2lwX21tID0gKG1heChwcmVjaXBfYWNjX2NtKS1taW4ocHJlY2lwX2FjY19jbSkpKjEwLCB2b2xfZ2FpbiA9IChtYXgoVk9MVU1FKS1taW4oVk9MVU1FKSksIHN0YXJ0X2RhdGUgPSBtaW4oRGF0ZSksIGVuZF9kYXRlID0gbWF4KERhdGUpKQ0KIA0KIHN0b3JtX3N0YXRzJGR1cmF0aW9uIDwtIHBhc3RlKHN0b3JtX3N0YXRzJHN0YXJ0X2RhdGUsIHN0b3JtX3N0YXRzJGVuZF9kYXRlLCBzZXAgPSAiLSIpDQogd3JpdGUuY3N2KHN0b3JtX3N0YXRzLCBmaWxlID0gIm91dHB1dC9zdG9ybV9zdGF0cy5jc3YiKQ0KYGBgDQoNCiNBZGQgbW9yZSBjb2x1bW5zIHRvIHN0b3Jtc3RhdHMNCiMgQ29ubmVjdCB3aXRoIGNodW5rIGFib3ZlISEhDQpgYGB7cn0NCnMgPC0gcmVhZC5jc3YoIm91dHB1dC9zdG9ybV9zdGF0cy5jc3YiKSAlPiUgDQogIG11dGF0ZShwb25kX3ZvbF9nYWluX2FjZnQgPSB2b2xfZ2FpbiowLjAwMDgxMDcxNCwgDQogICAgICAgICB2b2xfZ2Fpbl9wY3RfcG9uZCA9IDEwMCoodm9sX2dhaW4vNzk1MjUuODkpLCANCiAgICAgICAgIHZvbF9nYWluX3BjdF9jYXRjaCA9IDEwMCoodm9sX2dhaW4vKDcwMzM2Ny41KjAuMDAxKnByZWNpcF9tbSkpKSAlPiUgDQogIHJlbmFtZShwb25kX3ZvbF9nYWluX20zID0gdm9sX2dhaW4pICU+JSANCiAgbXV0YXRlX2lmKGlzLm51bWVyaWMsIHJvdW5kLCAyKSANCnMNCg0Kd3JpdGVfY3N2KHMsICJvdXRwdXQvMjAxODEwMjVfc3Rvcm1fc3RhdHMuY3N2IikNCg0KdCA8LSBzICU+JSANCiAgZmlsdGVyKHByZWNpcF9tbT4xKQ0KDQp3cml0ZV9jc3YodCwgIm91dHB1dC8yMDE4MTAyNV9zdG9ybV9zdGF0c19maWx0ZXJwcmVjaXAuY3N2IikNCg0KdSA8LSB0ICU+JSANCiAgZmlsdGVyKHZvbF9nYWluX3BjdF9wb25kPjEpDQogIA0Kd3JpdGVfY3N2KHUsICJvdXRwdXQvMjAxODEwMjVfc3Rvcm1fc3RhdHNfZmlsdGVycGN0cG9uZC5jc3YiKQ0KIA0KYGBgDQoNCg0KI1BhcnNlIE91dCBTdG9ybSBFdmVudCBUYWJsZXMNCmBgYHtyfQ0KI2h0dHBzOi8vc3RhY2tvdmVyZmxvdy5jb20vcXVlc3Rpb25zLzEzNjI5NjU5L2VmZmljaWVudC13YXktdG8tb3V0cHV0LXN1YnNldC1vZi1kYXRhLWZyYW1lLWJhc2VkLW9uLWNvbHVtbg0KIyBodHRwOi8vcnByb2dyYW1taW5nLm5ldC93cml0ZS1jc3YtaW4tci8NCiMjIE5lZWQgdG8gZmlndXJlIG91dCBob3cgdG8gd3JpdGUgdG8gb3V0cHV0IGZvbGRlcg0Kc3Rvcm1fdGFibGVzIDwtIGZ1bmN0aW9uKHN0b3JtX2V2ZW50KSB7DQogIHdyaXRlLmNzdihwb25kX3N0b3Jtc1twb25kX3N0b3JtcyRzdG9ybV9ldmVudCA9PSBzdG9ybV9ldmVudCwgXQ0KICAgICAgICAgICAgICAsIGZpbGUgPSBwYXN0ZTAoInN0b3JtX2V2ZW50XyIsIHN0b3JtX2V2ZW50LCAiLmNzdiIpDQogICAgICAgICAgICAgICkNCn0NCg0KbGFwcGx5KHVuaXF1ZShwb25kX3N0b3JtcyRzdG9ybV9ldmVudCksIHN0b3JtX3RhYmxlcykNCg0KYGBg</div>
 
 
 
