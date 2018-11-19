@@ -16,7 +16,7 @@ PT Elevations for Adjusted WSE
 - corrected with reference water level: 1.12m
 7/13/17-9/29/17 = 121.83
 - corrected with reference water level: 1.01m - 7/12 @12:45pm
-11/6/17-8/10/18 = 121.47
+***11/6/17-8/10/18 = 121.47
 - corrected with terrestrial PT
 
 ##Load Required Packages
