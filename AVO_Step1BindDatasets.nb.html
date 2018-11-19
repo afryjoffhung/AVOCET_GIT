@@ -190,65 +190,14 @@ $(document).ready(function () {
 <h1>Load Required Packages</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShwbHlyKVxuYGBgIn0= -->
-<pre class="r"><code>library(plyr)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShwbHlyKVxubGlicmFyeShkcGx5cilcbmxpYnJhcnkoZ2dwbG90MilcbmxpYnJhcnkobHVicmlkYXRlKVxubGlicmFyeShydmVzdClcbmxpYnJhcnkocmVhZHIpXG5gYGAifQ== -->
+<pre class="r"><code>library(plyr)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(rvest)
+library(readr)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDjpLzjuLFwbHly46S847iyIHdhcyBidWlsdCB1bmRlciBSIHZlcnNpb24gMy4zLjNcbiJ9 -->
-<pre><code>package 㤼㸱plyr㤼㸲 was built under R version 3.3.3</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkcGx5cilcbmBgYCJ9 -->
-<pre class="r"><code>library(dplyr)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDjpLzjuLFkcGx5cuOkvOO4siB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuMy4zXG5BdHRhY2hpbmcgcGFja2FnZTog46S847ixZHBseXLjpLzjuLJcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDjpLzjuLFwYWNrYWdlOnBseXLjpLzjuLI6XG5cbiAgICBhcnJhbmdlLCBjb3VudCwgZGVzYywgZmFpbHdpdGgsIGlkLCBtdXRhdGUsIHJlbmFtZSwgc3VtbWFyaXNlLCBzdW1tYXJpemVcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDjpLzjuLFwYWNrYWdlOnN0YXRz46S847iyOlxuXG4gICAgZmlsdGVyLCBsYWdcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDjpLzjuLFwYWNrYWdlOmJhc2XjpLzjuLI6XG5cbiAgICBpbnRlcnNlY3QsIHNldGRpZmYsIHNldGVxdWFsLCB1bmlvblxuIn0= -->
-<pre><code>package 㤼㸱dplyr㤼㸲 was built under R version 3.3.3
-Attaching package: 㤼㸱dplyr㤼㸲
-
-The following objects are masked from 㤼㸱package:plyr㤼㸲:
-
-    arrange, count, desc, failwith, id, mutate, rename, summarise, summarize
-
-The following objects are masked from 㤼㸱package:stats㤼㸲:
-
-    filter, lag
-
-The following objects are masked from 㤼㸱package:base㤼㸲:
-
-    intersect, setdiff, setequal, union</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShnZ3Bsb3QyKVxubGlicmFyeShsdWJyaWRhdGUpXG5gYGAifQ== -->
-<pre class="r"><code>library(ggplot2)
-library(lubridate)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDjpLzjuLFsdWJyaWRhdGXjpLzjuLIgd2FzIGJ1aWx0IHVuZGVyIFIgdmVyc2lvbiAzLjMuM1xuQXR0YWNoaW5nIHBhY2thZ2U6IOOkvOO4sWx1YnJpZGF0ZeOkvOO4slxuXG5UaGUgZm9sbG93aW5nIG9iamVjdCBpcyBtYXNrZWQgZnJvbSDjpLzjuLFwYWNrYWdlOnBseXLjpLzjuLI6XG5cbiAgICBoZXJlXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIOOkvOO4sXBhY2thZ2U6YmFzZeOkvOO4sjpcblxuICAgIGRhdGVcbiJ9 -->
-<pre><code>package 㤼㸱lubridate㤼㸲 was built under R version 3.3.3
-Attaching package: 㤼㸱lubridate㤼㸲
-
-The following object is masked from 㤼㸱package:plyr㤼㸲:
-
-    here
-
-The following object is masked from 㤼㸱package:base㤼㸲:
-
-    date</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShydmVzdClcbmBgYCJ9 -->
-<pre class="r"><code>library(rvest)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDjpLzjuLFydmVzdOOkvOO4siB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuMy4zTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiB4bWwyXG5wYWNrYWdlIOOkvOO4sXhtbDLjpLzjuLIgd2FzIGJ1aWx0IHVuZGVyIFIgdmVyc2lvbiAzLjMuM1xuIn0= -->
-<pre><code>package 㤼㸱rvest㤼㸲 was built under R version 3.3.3Loading required package: xml2
-package 㤼㸱xml2㤼㸲 was built under R version 3.3.3</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkcilcbmBgYCJ9 -->
-<pre class="r"><code>library(readr)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDjpLzjuLFyZWFkcuOkvOO4siB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuMy4zXG5BdHRhY2hpbmcgcGFja2FnZTog46S847ixcmVhZHLjpLzjuLJcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20g46S847ixcGFja2FnZTpydmVzdOOkvOO4sjpcblxuICAgIGd1ZXNzX2VuY29kaW5nXG4ifQ== -->
-<pre><code>package 㤼㸱readr㤼㸲 was built under R version 3.3.3
-Attaching package: 㤼㸱readr㤼㸲
-
-The following object is masked from 㤼㸱package:rvest㤼㸲:
-
-    guess_encoding</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <div id="step-1-load-in-data" class="section level5">
@@ -261,7 +210,7 @@ PT &lt;- read_csv(&quot;output/AVO_PTcleaned_1718.csv&quot;) %&gt;%
   rename(WSE = Adjusted_WSE) %&gt;%
   mutate(WSE = round(WSE, digits = 2))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBPcmRlciA9IGNvbF9pbnRlZ2VyKCksXG4gIERhdGVUaW1lID0gY29sX2RhdGV0aW1lKGZvcm1hdCA9IFwiXCIpLFxuICBQVF9rUGEgPSBjb2xfZG91YmxlKCksXG4gIFdhdGVyVGVtcF9jID0gY29sX2RvdWJsZSgpLFxuICBCYXJvX2tQYSA9IGNvbF9kb3VibGUoKSxcbiAgUFRfRGVwdGhfbSA9IGNvbF9kb3VibGUoKSxcbiAgQWRqdXN0ZWRfUFREZXB0aCA9IGNvbF9kb3VibGUoKSxcbiAgQWRqdXN0ZWRfV1NFID0gY29sX2RvdWJsZSgpXG4pXG5wYWNrYWdlIOOkvOO4sWJpbmRyY3Bw46S847iyIHdhcyBidWlsdCB1bmRlciBSIHZlcnNpb24gMy4zLjNcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBPcmRlciA9IGNvbF9pbnRlZ2VyKCksXG4gIERhdGVUaW1lID0gY29sX2RhdGV0aW1lKGZvcm1hdCA9IFwiXCIpLFxuICBQVF9rUGEgPSBjb2xfZG91YmxlKCksXG4gIFdhdGVyVGVtcF9jID0gY29sX2RvdWJsZSgpLFxuICBCYXJvX2tQYSA9IGNvbF9kb3VibGUoKSxcbiAgUFRfRGVwdGhfbSA9IGNvbF9kb3VibGUoKSxcbiAgQWRqdXN0ZWRfUFREZXB0aCA9IGNvbF9kb3VibGUoKSxcbiAgQWRqdXN0ZWRfV1NFID0gY29sX2RvdWJsZSgpXG4pXG4ifQ== -->
 <pre><code>Parsed with column specification:
 cols(
   Order = col_integer(),
@@ -272,14 +221,14 @@ cols(
   PT_Depth_m = col_double(),
   Adjusted_PTDepth = col_double(),
   Adjusted_WSE = col_double()
-)
-package 㤼㸱bindrcpp㤼㸲 was built under R version 3.3.3</code></pre>
+)</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0FkanVzdCBXU0UgdG8gMiBkZWNpbWVsIHBsYWNlcy4gIFN0YWZmIGdhZ2UgcmVhZHMgYXQgY20gbGV2ZWwgY29ycmVjdGlvblxuI1JlYWQgaW4gUHJlY2lwIERhdGFcblBDUCA8LSByZWFkX2NzdihcIm91dHB1dC9DREVDcHJlY2lwX2VkaXRlZC5jc3ZcIikgJT4lIFxuICByZW5hbWUoRGF0ZVRpbWUgPSBkYXRldGltZSlcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0FkanVzdCBXU0UgdG8gMiBkZWNpbWVsIHBsYWNlcy4gIFN0YWZmIGdhZ2UgcmVhZHMgYXQgY20gbGV2ZWwgY29ycmVjdGlvblxuI1JlYWQgaW4gUHJlY2lwIERhdGFcblBDUCA8LSByZWFkX2NzdihcIm91dHB1dC9DREVDcHJlY2lwX2VkaXRlZC5jc3ZcIikgJT4lIFxuICByZW5hbWUoRGF0ZVRpbWUgPSBkYXRldGltZSkgJT4lIFxuICBtdXRhdGUocHJlY2lwX2FjY19tbSA9IHByZWNpcF9hY2NfaW4qMjUuNClcbmBgYCJ9 -->
 <pre class="r"><code>#Adjust WSE to 2 decimel places.  Staff gage reads at cm level correction
 #Read in Precip Data
 PCP &lt;- read_csv(&quot;output/CDECprecip_edited.csv&quot;) %&gt;% 
-  rename(DateTime = datetime)</code></pre>
+  rename(DateTime = datetime) %&gt;% 
+  mutate(precip_acc_mm = precip_acc_in*25.4)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBhZ2VuY3lfY2QgPSBjb2xfY2hhcmFjdGVyKCksXG4gIGxvY2F0aW9uX2lkID0gY29sX2NoYXJhY3RlcigpLFxuICBkYXRldGltZSA9IGNvbF9kYXRldGltZShmb3JtYXQgPSBcIlwiKSxcbiAgcHJlY2lwX2FjY19pbiA9IGNvbF9kb3VibGUoKSxcbiAgcHJlY2lwX2V2ZW50X2luID0gY29sX2RvdWJsZSgpLFxuICBwcmVjaXBfZXZlbnRfbW0gPSBjb2xfZG91YmxlKClcbilcbiJ9 -->
 <pre><code>Parsed with column specification:
@@ -318,33 +267,277 @@ cols(
 <p>because using this column</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGVzdCA8LSBQVCAlPiUgXG4gIGlubmVyX2pvaW4oUENQLCBieSA9IFwiRGF0ZVRpbWVcIikgJT4lIFxuICBpbm5lcl9qb2luKFNDLCBieSA9IFwiV1NFXCIpXG5gYGAifQ== -->
-<pre class="r"><code>test &lt;- PT %&gt;% 
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucG9uZGZsdXhfMTVtaW4gPC0gUFQgJT4lIFxuICBpbm5lcl9qb2luKFBDUCwgYnkgPSBcIkRhdGVUaW1lXCIpICU+JSBcbiAgaW5uZXJfam9pbihTQywgYnkgPSBcIldTRVwiKSAlPiUgXG4gIG11dGF0ZShEYXRlID0gZGF0ZShEYXRlVGltZSkpXG4jIERyb3AgdW53YW50ZWQgY29sdW1ucyBcbmBgYCJ9 -->
+<pre class="r"><code>pondflux_15min &lt;- PT %&gt;% 
   inner_join(PCP, by = &quot;DateTime&quot;) %&gt;% 
-  inner_join(SC, by = &quot;WSE&quot;)</code></pre>
+  inner_join(SC, by = &quot;WSE&quot;) %&gt;% 
+  mutate(Date = date(DateTime))
+# Drop unwanted columns </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="step-3-bind-data2-to-data3" class="section level5">
-<h5>Step 3: Bind data2 to data3</h5>
-<p>because using this column</p>
+<div id="step-3-daily-summary" class="section level5">
+<h5>Step 3: Daily Summary</h5>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTdW1tYXJpemUgYnkgZGF5XG4jIyBOZWVkIHRvIHNldCBmaXJzdCBkaWZmZXJlbmNlIHZhbHVlcyB0byAwXG5wb25kZmx1eF9kYWlseSA8LSBwb25kZmx1eF8xNW1pbiAlPiVcbiAgZ3JvdXBfYnkoRGF0ZSkgJT4lIFxuICBzdW1tYXJpemUoV1NFbWluID0gbWluKFdTRSksIFdTRW1lYW4gPSBtZWFuKFdTRSksV1NFbWF4ID0gbWF4KFdTRSkscHJlY2lwX2V2ZW50X21tID0gc3VtKHByZWNpcF9ldmVudF9tbSksIHByZWNpcF9hY2NfbW0gPSBtYXgocHJlY2lwX2FjY19tbSksIFZPTG1pbiA9bWluKFZPTGFjZnQpLCBWT0xtZWFuID0gbWVhbihWT0xhY2Z0KSwgVk9MbWF4ID0gbWF4KFZPTGFjZnQpLCBTQW1pbiA9IG1pbihTQWFjKSwgU0FtZWFuID0gbWVhbihTQWFjKSwgU0FtYXggPSBtYXgoU0FhYykpICU+JSBcbiAgbXV0YXRlKFZPTGNoZyA9IGMoVk9MbWF4WzFdLCBkaWZmKFZPTG1heCkpLFZPTGNoZyA9IGlmX2Vsc2UoVk9MY2hnID09IFZPTG1heCwgMCwgVk9MY2hnKSwgU0FjaGcgPSBjKFNBbWF4WzFdLCBkaWZmKFNBbWF4KSksIFNBY2hnID0gaWZfZWxzZShTQW1heCA9PSBTQWNoZywgMCwgU0FjaGcpLCBBY1BlckRheSA9IChWT0xjaGcvU0FtYXgpKVxuICBcbiMgTWF4IFdTRSBcbmBgYCJ9 -->
+<pre class="r"><code># Summarize by day
+## Need to set first difference values to 0
+pondflux_daily &lt;- pondflux_15min %&gt;%
+  group_by(Date) %&gt;% 
+  summarize(WSEmin = min(WSE), WSEmean = mean(WSE),WSEmax = max(WSE),precip_event_mm = sum(precip_event_mm), precip_acc_mm = max(precip_acc_mm), VOLmin =min(VOLacft), VOLmean = mean(VOLacft), VOLmax = max(VOLacft), SAmin = min(SAac), SAmean = mean(SAac), SAmax = max(SAac)) %&gt;% 
+  mutate(VOLchg = c(VOLmax[1], diff(VOLmax)),VOLchg = if_else(VOLchg == VOLmax, 0, VOLchg), SAchg = c(SAmax[1], diff(SAmax)), SAchg = if_else(SAmax == SAchg, 0, SAchg), AcPerDay = (VOLchg/SAmax))
+  
+# Max WSE </code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="step-4-determine-catchment-area-draining-into-avo" class="section level4">
-<h4>Step 4: Determine Catchment Area Draining into AVO</h4>
-<p><em>add column for total precip volume vs. pond volume gain</em></p>
+<div id="step-4-et-rate" class="section level4">
+<h4>Step 4: ET Rate</h4>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBQSEVfc3ViYmFzaW5zIDwtIHJlYWRfY3N2KFwiZGF0YS9QSEVfc3ViYmFzaW5zLmNzdlwiKSBcbiMgcG9uZF9zdWJzIDwtIFBIRV9zdWJiYXNpbnNbYygtMiwtNSwtNiwtNyksXVxuIyBBVk9fY2F0Y2ggPC0gc3VtKHBvbmRfc3VicyRTaGFwZV9BcmVhKVxuIyBBVk9fY2F0Y2hcbiAgXG5gYGAifQ== -->
-<pre class="r"><code># PHE_subbasins &lt;- read_csv(&quot;data/PHE_subbasins.csv&quot;) 
-# pond_subs &lt;- PHE_subbasins[c(-2,-5,-6,-7),]
-# AVO_catch &lt;- sum(pond_subs$Shape_Area)
-# AVO_catch
-  </code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdChwb25kZmx1eF9kYWlseSREYXRlLCBwb25kZmx1eF9kYWlseSRWT0xjaGcpK1xuICBhYmxpbmUobG0ocG9uZGZsdXhfZGFpbHkkVk9MY2hnfnBvbmRmbHV4X2RhaWx5JERhdGUpLCBjb2w9XCJyZWRcIilcbmBgYCJ9 -->
+<pre class="r"><code>plot(pondflux_daily$Date, pondflux_daily$VOLchg)+
+  abline(lm(pondflux_daily$VOLchg~pondflux_daily$Date), col=&quot;red&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiaW50ZWdlcigwKVxuIn0= -->
+<pre><code>integer(0)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-plot-begin eyJjb25kaXRpb25zIjpbXSwiaGVpZ2h0Ijo0MzIuNjMyOSwic2l6ZV9iZWhhdmlvciI6MCwid2lkdGgiOjcwMH0= -->
+<p><img src="data:image/png;base64,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" /></p>
+<!-- rnb-plot-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbl90ZXN0IDwtIG1lYW4ocG9uZGZsdXhfZGFpbHkkVk9MY2hnKVxubWVhbl90ZXN0XG5gYGAifQ== -->
+<pre class="r"><code>mean_test &lt;- mean(pondflux_daily$VOLchg)
+mean_test</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIC0wLjAxNzkxMTJcbiJ9 -->
+<pre><code>[1] -0.0179112</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVkaWFuX3Rlc3QgPC0gbWVkaWFuKHBvbmRmbHV4X2RhaWx5JFZPTGNoZylcbm1lZGlhbl90ZXN0XG5gYGAifQ== -->
+<pre class="r"><code>median_test &lt;- median(pondflux_daily$VOLchg)
+median_test</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDBcbiJ9 -->
+<pre><code>[1] 0</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeV9zdGF0cyA8LSBzdW1tYXJ5KHBvbmRmbHV4X2RhaWx5JFZPTGNoZylcbnN1bW1hcnlfc3RhdHNcbmBgYCJ9 -->
+<pre class="r"><code>summary_stats &lt;- summary(pondflux_daily$VOLchg)
+summary_stats</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgIE1pbi4gIDFzdCBRdS4gICBNZWRpYW4gICAgIE1lYW4gIDNyZCBRdS4gICAgIE1heC4gXG4tMC41NjY3NyAtMC4yMDAyNyAgMC4wMDAwMCAtMC4wMTc5MSAgMC4wMDAwMCAxMS45NDMyMiBcbiJ9 -->
+<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-0.56677 -0.20027  0.00000 -0.01791  0.00000 11.94322 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuRVR0ZXN0IDwtIGxtKHBvbmRmbHV4X2RhaWx5JFZPTGNoZ35wb25kZmx1eF9kYWlseSREYXRlKVxuRVR0ZXN0XG5gYGAifQ== -->
+<pre class="r"><code>ETtest &lt;- lm(pondflux_daily$VOLchg~pondflux_daily$Date)
+ETtest</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DYWxsOlxubG0oZm9ybXVsYSA9IHBvbmRmbHV4X2RhaWx5JFZPTGNoZyB+IHBvbmRmbHV4X2RhaWx5JERhdGUpXG5cbkNvZWZmaWNpZW50czpcbiAgICAgICAgKEludGVyY2VwdCkgIHBvbmRmbHV4X2RhaWx5JERhdGUgIFxuICAgICAgICAgMTQuMzE3NDUzOCAgICAgICAgICAgLTAuMDAwODE0MyAgXG4ifQ== -->
+<pre><code>
+Call:
+lm(formula = pondflux_daily$VOLchg ~ pondflux_daily$Date)
+
+Coefficients:
+        (Intercept)  pondflux_daily$Date  
+         14.3174538           -0.0008143  </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="filter-march-and-april-storms" class="section level1">
+<h1>Filter March and April Storms</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFyY2guc3Rvcm0gPC0gZmlsdGVyKHBvbmRmbHV4XzE1bWluLCBEYXRlID49IFwiMjAxOC0wMy0yMFwiICYgRGF0ZSA8PVwiMjAxOC0wMy0yMlwiKSAlPiUgXG4gIG11dGF0ZShFdmVudF9BY2MgPSBjdW1zdW0ocHJlY2lwX2V2ZW50X21tKSwgVk9MZ2FpbiA9IFZPTGFjZnQtOC41NzE4ODQpXG5hcHJpbC5zdG9ybSA8LSBmaWx0ZXIocG9uZGZsdXhfMTVtaW4sIERhdGUgPj0gXCIyMDE4LTA0LTA2XCIgJiBEYXRlIDw9XCIyMDE4LTA0LTA3XCIpICU+JSBcbiAgbXV0YXRlKEV2ZW50X0FjYyA9IGN1bXN1bShwcmVjaXBfZXZlbnRfbW0pLCBWT0xnYWluID0gVk9MYWNmdC0yMC4xODA2OClcbmBgYCJ9 -->
+<pre class="r"><code>march.storm &lt;- filter(pondflux_15min, Date &gt;= &quot;2018-03-20&quot; &amp; Date &lt;=&quot;2018-03-22&quot;) %&gt;% 
+  mutate(Event_Acc = cumsum(precip_event_mm), VOLgain = VOLacft-8.571884)
+april.storm &lt;- filter(pondflux_15min, Date &gt;= &quot;2018-04-06&quot; &amp; Date &lt;=&quot;2018-04-07&quot;) %&gt;% 
+  mutate(Event_Acc = cumsum(precip_event_mm), VOLgain = VOLacft-20.18068)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="plot-march-storm-hyetograph" class="section level1">
+<h1>Plot March Storm Hyetograph</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucG5nKFwiZmlncy9tYXJjaF9zdG9ybV9oeWV0b2dyYXBoLnBuZ1wiLCB3aWR0aCA9IDYwMCwgaGVpZ2h0ID0gNDAwKVxucGFyKG1hciA9IGMoNSwgNSwgMywgNSkpXG5wbG90KG1hcmNoLnN0b3JtJERhdGVUaW1lLCBtYXJjaC5zdG9ybSRwcmVjaXBfZXZlbnRfbW0sIHR5cGUgPSBcImhcIiwgeWxhYiA9IFwiUHJlY2lwaXRhdGlvbiBFdmVudCAobW0pXCIsIG1haW4gPSBcIk1hcmNoIFN0b3JtIEh5ZXRvZ3JhcGhcIiwgeGxhYiA9IFwiTWFyY2ggMjAtMjIsIDIwMThcIiwgY29sID0gXCJkZWVwc2t5Ymx1ZVwiKVxucGFyKG5ldyA9IFRSVUUpXG5wbG90KG1hcmNoLnN0b3JtJERhdGVUaW1lLCBtYXJjaC5zdG9ybSRFdmVudF9BY2MsIHR5cGUgPSBcImxcIiwgeGF4dCA9IFwiblwiLCB5YXh0ID0gXCJuXCIsIHlsYWIgPSBcIlwiLCB4bGFiID0gXCJcIiwgY29sID0gXCJkYXJrYmx1ZVwiLCBsdHkgPSAyKVxuYGBgIn0= -->
+<pre class="r"><code>png(&quot;figs/march_storm_hyetograph.png&quot;, width = 600, height = 400)
+par(mar = c(5, 5, 3, 5))
+plot(march.storm$DateTime, march.storm$precip_event_mm, type = &quot;h&quot;, ylab = &quot;Precipitation Event (mm)&quot;, main = &quot;March Storm Hyetograph&quot;, xlab = &quot;March 20-22, 2018&quot;, col = &quot;deepskyblue&quot;)
+par(new = TRUE)
+plot(march.storm$DateTime, march.storm$Event_Acc, type = &quot;l&quot;, xaxt = &quot;n&quot;, yaxt = &quot;n&quot;, ylab = &quot;&quot;, xlab = &quot;&quot;, col = &quot;darkblue&quot;, lty = 2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXhpcyhzaWRlID0gNClcbm10ZXh0KFwiQWNjdW11bGF0ZWQgUHJlY2lwaXRhdGlvbiAobW0pXCIsIHNpZGUgPSA0LCBsaW5lID0gMylcbmxlZ2VuZChcInRvcGxlZnRcIiwgYyhcIkV2ZW50XCIsIFwiQWNjdW11bGF0ZWRcIiksXG4gICAgICAgY29sID0gYyhcImRlZXBza3libHVlXCIsIFwiZGFya2JsdWVcIiksIGx0eSA9IGMoMSwgMikpXG5kZXYub2ZmKClcbmBgYCJ9 -->
+<pre class="r"><code>axis(side = 4)
+mtext(&quot;Accumulated Precipitation (mm)&quot;, side = 4, line = 3)
+legend(&quot;topleft&quot;, c(&quot;Event&quot;, &quot;Accumulated&quot;),
+       col = c(&quot;deepskyblue&quot;, &quot;darkblue&quot;), lty = c(1, 2))
+dev.off()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoibnVsbCBkZXZpY2UgXG4gICAgICAgICAgMSBcbiJ9 -->
+<pre><code>null device 
+          1 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="plot-march-storm-pond-fill" class="section level1">
+<h1>Plot March Storm Pond Fill</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucG5nKFwiZmlncy9tYXJjaF9zdG9ybV9wb25kZmlsbC5wbmdcIiwgd2lkdGggPSA2MDAsIGhlaWdodCA9IDQwMClcbnBhcihtYXIgPSBjKDUsIDUsIDMsIDUpKVxucGxvdChtYXJjaC5zdG9ybSREYXRlVGltZSwgbWFyY2guc3Rvcm0kcHJlY2lwX2V2ZW50X21tLCB0eXBlID0gXCJoXCIsIHlsYWIgPSBcIlByZWNpcGl0YXRpb24gKG1tKVwiLCBtYWluID0gXCJNYXJjaCBTdG9ybSBQb25kIEZpbGxcIiwgeGxhYiA9IFwiTWFyY2ggMjAtMjIsIDIwMThcIiwgY29sID0gXCJkZWVwc2t5Ymx1ZVwiKVxucGFyKG5ldyA9IFRSVUUpXG5wbG90KG1hcmNoLnN0b3JtJERhdGVUaW1lLCBkZXNwaWtlKG1hcmNoLnN0b3JtJFZPTGdhaW4sIHJlZmVyZW5jZT1cIm1lZGlhblwiLCBuID0gMSwgayA9IDMxKSwgdHlwZSA9IFwibFwiLCB4YXh0ID0gXCJuXCIsIHlheHQgPSBcIm5cIiwgeWxhYiA9IFwiblwiLCB4bGFiID0gXCJuXCIsIGNvbCA9IFwiZGFya2JsdWVcIiwgbHR5ID0gMylcbmBgYCJ9 -->
+<pre class="r"><code>png(&quot;figs/march_storm_pondfill.png&quot;, width = 600, height = 400)
+par(mar = c(5, 5, 3, 5))
+plot(march.storm$DateTime, march.storm$precip_event_mm, type = &quot;h&quot;, ylab = &quot;Precipitation (mm)&quot;, main = &quot;March Storm Pond Fill&quot;, xlab = &quot;March 20-22, 2018&quot;, col = &quot;deepskyblue&quot;)
+par(new = TRUE)
+plot(march.storm$DateTime, despike(march.storm$VOLgain, reference=&quot;median&quot;, n = 1, k = 31), type = &quot;l&quot;, xaxt = &quot;n&quot;, yaxt = &quot;n&quot;, ylab = &quot;n&quot;, xlab = &quot;n&quot;, col = &quot;darkblue&quot;, lty = 3)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXhpcyhzaWRlID0gNClcbm10ZXh0KFwiQWNjdW11bGF0ZWQgVm9sdW1lIChhYy1mdClcIiwgc2lkZSA9IDQsIGxpbmUgPSAzKVxubGVnZW5kKFwidG9wbGVmdFwiLCBjKFwiUHJlY2lwIEV2ZW50XCIsIFwiUG9uZCBWb3VtZVwiKSxcbiAgICAgICBjb2wgPSBjKFwiZGVlcHNreWJsdWVcIiwgXCJkYXJrYmx1ZVwiKSwgbHR5ID0gYygxLCAyKSlcbmRldi5vZmYoKVxuYGBgIn0= -->
+<pre class="r"><code>axis(side = 4)
+mtext(&quot;Accumulated Volume (ac-ft)&quot;, side = 4, line = 3)
+legend(&quot;topleft&quot;, c(&quot;Precip Event&quot;, &quot;Pond Voume&quot;),
+       col = c(&quot;deepskyblue&quot;, &quot;darkblue&quot;), lty = c(1, 2))
+dev.off()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoibnVsbCBkZXZpY2UgXG4gICAgICAgICAgMSBcbiJ9 -->
+<pre><code>null device 
+          1 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="filter-april-storm-hyetograph" class="section level1">
+<h1>Filter April Storm Hyetograph</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucG5nKFwiZmlncy9hcHJpbF9zdG9ybV9oeWV0b2dyYXBoLnBuZ1wiLCB3aWR0aCA9IDYwMCwgaGVpZ2h0ID0gNDAwKVxucGFyKG1hciA9IGMoNSwgNSwgMywgNSkpXG5wbG90KGFwcmlsLnN0b3JtJERhdGVUaW1lLCBhcHJpbC5zdG9ybSRwcmVjaXBfZXZlbnRfbW0sIHR5cGUgPSBcImhcIiwgeWxhYiA9IFwiUHJlY2lwaXRhdGlvbiBFdmVudCAobW0pXCIsIG1haW4gPSBcIkFwcmlsIFN0b3JtIEh5ZXRvZ3JhcGhcIiwgeGxhYiA9IFwiQXByaWwgNi03LCAyMDE4XCIsIGNvbCA9IFwiZGVlcHNreWJsdWVcIilcbnBhcihuZXcgPSBUUlVFKVxucGxvdChhcHJpbC5zdG9ybSREYXRlVGltZSwgYXByaWwuc3Rvcm0kRXZlbnRfQWNjLCB0eXBlID0gXCJsXCIsIHhheHQgPSBcIm5cIiwgeWF4dCA9IFwiblwiLCB5bGFiID0gXCJcIiwgeGxhYiA9IFwiXCIsIGNvbCA9IFwiZGFya2JsdWVcIiwgbHR5ID0gMilcbmBgYCJ9 -->
+<pre class="r"><code>png(&quot;figs/april_storm_hyetograph.png&quot;, width = 600, height = 400)
+par(mar = c(5, 5, 3, 5))
+plot(april.storm$DateTime, april.storm$precip_event_mm, type = &quot;h&quot;, ylab = &quot;Precipitation Event (mm)&quot;, main = &quot;April Storm Hyetograph&quot;, xlab = &quot;April 6-7, 2018&quot;, col = &quot;deepskyblue&quot;)
+par(new = TRUE)
+plot(april.storm$DateTime, april.storm$Event_Acc, type = &quot;l&quot;, xaxt = &quot;n&quot;, yaxt = &quot;n&quot;, ylab = &quot;&quot;, xlab = &quot;&quot;, col = &quot;darkblue&quot;, lty = 2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXhpcyhzaWRlID0gNClcbm10ZXh0KFwiQWNjdW11bGF0ZWQgUHJlY2lwaXRhdGlvbiAobW0pXCIsIHNpZGUgPSA0LCBsaW5lID0gMylcbmxlZ2VuZChcInRvcGxlZnRcIiwgYyhcIkV2ZW50XCIsIFwiQWNjdW11bGF0ZWRcIiksXG4gICAgICAgY29sID0gYyhcImRlZXBza3libHVlXCIsIFwiZGFya2JsdWVcIiksIGx0eSA9IGMoMSwgMikpXG5kZXYub2ZmKClcbmBgYCJ9 -->
+<pre class="r"><code>axis(side = 4)
+mtext(&quot;Accumulated Precipitation (mm)&quot;, side = 4, line = 3)
+legend(&quot;topleft&quot;, c(&quot;Event&quot;, &quot;Accumulated&quot;),
+       col = c(&quot;deepskyblue&quot;, &quot;darkblue&quot;), lty = c(1, 2))
+dev.off()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoibnVsbCBkZXZpY2UgXG4gICAgICAgICAgMSBcbiJ9 -->
+<pre><code>null device 
+          1 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="plot-april-storm-pond-fill" class="section level1">
+<h1>Plot April Storm Pond Fill</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucG5nKFwiZmlncy9hcHJpbF9zdG9ybV9wb25kZmlsbC5wbmdcIiwgd2lkdGggPSA2MDAsIGhlaWdodCA9IDQwMClcbnBhcihtYXIgPSBjKDUsIDUsIDMsIDUpKVxucGxvdChhcHJpbC5zdG9ybSREYXRlVGltZSwgYXByaWwuc3Rvcm0kcHJlY2lwX2V2ZW50X21tLCB0eXBlID0gXCJoXCIsIHlsYWIgPSBcIlByZWNpcGl0YXRpb24gKG1tKVwiLCBtYWluID0gXCJBcHJpbCBTdG9ybSBQb25kIEZpbGxcIiwgeGxhYiA9IFwiQXByaWwgNi03LCAyMDE4XCIsIGNvbCA9IFwiZGVlcHNreWJsdWVcIilcbnBhcihuZXcgPSBUUlVFKVxucGxvdChhcHJpbC5zdG9ybSREYXRlVGltZSwgZGVzcGlrZShhcHJpbC5zdG9ybSRWT0xnYWluLCByZWZlcmVuY2U9XCJtZWRpYW5cIiwgbiA9IDEsIGsgPSAzMSksIHR5cGUgPSBcImxcIiwgeGF4dCA9IFwiblwiLCB5YXh0ID0gXCJuXCIsIHlsYWIgPSBcIlwiLCB4bGFiID0gXCJcIiwgY29sID0gXCJkYXJrYmx1ZVwiLCBsdHkgPSAzKVxuYGBgIn0= -->
+<pre class="r"><code>png(&quot;figs/april_storm_pondfill.png&quot;, width = 600, height = 400)
+par(mar = c(5, 5, 3, 5))
+plot(april.storm$DateTime, april.storm$precip_event_mm, type = &quot;h&quot;, ylab = &quot;Precipitation (mm)&quot;, main = &quot;April Storm Pond Fill&quot;, xlab = &quot;April 6-7, 2018&quot;, col = &quot;deepskyblue&quot;)
+par(new = TRUE)
+plot(april.storm$DateTime, despike(april.storm$VOLgain, reference=&quot;median&quot;, n = 1, k = 31), type = &quot;l&quot;, xaxt = &quot;n&quot;, yaxt = &quot;n&quot;, ylab = &quot;&quot;, xlab = &quot;&quot;, col = &quot;darkblue&quot;, lty = 3)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXhpcyhzaWRlID0gNClcbm10ZXh0KFwiQWNjdW11bGF0ZWQgVm9sdW1lIChhYy1mdClcIiwgc2lkZSA9IDQsIGxpbmUgPSAzKVxubGVnZW5kKFwidG9wbGVmdFwiLCBjKFwiUHJlY2lwIEV2ZW50XCIsIFwiUG9uZCBWb3VtZVwiKSxcbiAgICAgICBjb2wgPSBjKFwiZGVlcHNreWJsdWVcIiwgXCJkYXJrYmx1ZVwiKSwgbHR5ID0gYygxLCAzKSlcbmRldi5vZmYoKVxuYGBgIn0= -->
+<pre class="r"><code>axis(side = 4)
+mtext(&quot;Accumulated Volume (ac-ft)&quot;, side = 4, line = 3)
+legend(&quot;topleft&quot;, c(&quot;Precip Event&quot;, &quot;Pond Voume&quot;),
+       col = c(&quot;deepskyblue&quot;, &quot;darkblue&quot;), lty = c(1, 3))
+dev.off()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoibnVsbCBkZXZpY2UgXG4gICAgICAgICAgMSBcbiJ9 -->
+<pre><code>null device 
+          1 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="plot-seasonal-pond-volume-against-precipitation-events" class="section level1">
+<h1>Plot Seasonal Pond Volume against Precipitation Events</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3BuZyhcImZpZ3Mvc2Vhc29uX2ZpbGxkcmF3ZG93bi5wbmdcIiwgd2lkdGggPSA2MDAsIGhlaWdodCA9IDQwMClcbnBhcihtYXIgPSBjKDUsIDUsIDMsIDUpKVxucGxvdChwb25kZmx1eF9kYWlseSREYXRlLCBwb25kZmx1eF9kYWlseSRwcmVjaXBfZXZlbnRfbW0sIHR5cGUgPSBcImhcIiwgeWxhYiA9IFwiUHJlY2lwaXRhdGlvbiAobW0pXCIsIG1haW4gPSBcIlBvbmQgRmlsbCBhbmQgRHJhd2Rvd25cIiwgeGxhYiA9IFwiTm92ZW1iZXIgNiwgMjAxNyAtIEp1bHkgMjMsIDIwMThcIiwgY29sID0gXCJkZWVwc2t5Ymx1ZVwiLCBsdHkgPSAxKVxucGFyKG5ldyA9IFRSVUUpXG5gYGAifQ== -->
+<pre class="r"><code>#png(&quot;figs/season_filldrawdown.png&quot;, width = 600, height = 400)
+par(mar = c(5, 5, 3, 5))
+plot(pondflux_daily$Date, pondflux_daily$precip_event_mm, type = &quot;h&quot;, ylab = &quot;Precipitation (mm)&quot;, main = &quot;Pond Fill and Drawdown&quot;, xlab = &quot;November 6, 2017 - July 23, 2018&quot;, col = &quot;deepskyblue&quot;, lty = 1)
+par(new = TRUE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdChwb25kZmx1eF9kYWlseSREYXRlLCBwb25kZmx1eF9kYWlseSRWT0xtZWFuLCB0eXBlID0gXCJsXCIsIHhheHQgPSBcIm5cIiwgeWF4dCA9IFwiblwiLCB5bGFiID0gXCJcIiwgeGxhYiA9IFwiXCIsIGNvbCA9IFwiZGFya2JsdWVcIiwgbHR5ID0gMilcbmF4aXMoc2lkZSA9IDQpXG5gYGAifQ== -->
+<pre class="r"><code>plot(pondflux_daily$Date, pondflux_daily$VOLmean, type = &quot;l&quot;, xaxt = &quot;n&quot;, yaxt = &quot;n&quot;, ylab = &quot;&quot;, xlab = &quot;&quot;, col = &quot;darkblue&quot;, lty = 2)
+axis(side = 4)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXRleHQoXCJWb2x1bWUgKGFjLWZ0KVwiLCBzaWRlID0gNCwgbGluZSA9IDMpXG5sZWdlbmQoXCJ0b3BsZWZ0XCIsIGMoXCJQcmVjaXAgRXZlbnRcIixcIlBvbmQgVm9sdW1lXCIpLFxuICAgICAgIGNvbCA9IGMoXCJkZWVwc2t5Ymx1ZVwiLCBcImRhcmtibHVlXCIpLCBsdHkgPSBjKDEsIDIpKVxuYGBgIn0= -->
+<pre class="r"><code>mtext(&quot;Volume (ac-ft)&quot;, side = 4, line = 3)
+legend(&quot;topleft&quot;, c(&quot;Precip Event&quot;,&quot;Pond Volume&quot;),
+       col = c(&quot;deepskyblue&quot;, &quot;darkblue&quot;), lty = c(1, 2))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-plot-begin eyJjb25kaXRpb25zIjpbXSwiaGVpZ2h0Ijo0MzIuNjMyOSwic2l6ZV9iZWhhdmlvciI6MCwid2lkdGgiOjcwMH0= -->
+<p><img src="data:image/png;base64,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" /></p>
+<!-- rnb-plot-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2Rldi5vZmYoKVxuYGBgIn0= -->
+<pre class="r"><code>#dev.off()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="plot-precipitation-events-against-accumulated-precipitation" class="section level1">
+<h1>Plot Precipitation Events Against Accumulated Precipitation</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucG5nKFwiZmlncy9zZWFzb25fcHJlY2lwaXRhdGlvbi5wbmdcIiwgd2lkdGggPSA2MDAsIGhlaWdodCA9IDQwMClcbnBhcihtYXIgPSBjKDUsIDUsIDMsIDUpKVxucGxvdChwb25kZmx1eF9kYWlseSREYXRlLCBwb25kZmx1eF9kYWlseSRwcmVjaXBfZXZlbnRfbW0sIHR5cGUgPSBcImhcIiwgeWxhYiA9IFwiUHJlY2lwaXRhdGlvbiBFdmVudCAobW0pXCIsIG1haW4gPSBcIlByZWNpcGl0YXRpb25cIiwgeGxhYiA9IFwiTm92ZW1iZXIgNiwgMjAxNyAtIEp1bHkgMjMsIDIwMThcIiwgY29sID0gXCJkZWVwc2t5Ymx1ZVwiKVxucGFyKG5ldyA9IFRSVUUpXG5wbG90KHBvbmRmbHV4X2RhaWx5JERhdGUsIHBvbmRmbHV4X2RhaWx5JHByZWNpcF9hY2NfbW0sIHR5cGUgPSBcImxcIiwgeGF4dCA9IFwiblwiLCB5YXh0ID0gXCJuXCIsIHlsYWIgPSBcIlwiLCB4bGFiID0gXCJcIiwgY29sID0gXCJkYXJrYmx1ZVwiLCBsdHkgPSAyKVxuYGBgIn0= -->
+<pre class="r"><code>png(&quot;figs/season_precipitation.png&quot;, width = 600, height = 400)
+par(mar = c(5, 5, 3, 5))
+plot(pondflux_daily$Date, pondflux_daily$precip_event_mm, type = &quot;h&quot;, ylab = &quot;Precipitation Event (mm)&quot;, main = &quot;Precipitation&quot;, xlab = &quot;November 6, 2017 - July 23, 2018&quot;, col = &quot;deepskyblue&quot;)
+par(new = TRUE)
+plot(pondflux_daily$Date, pondflux_daily$precip_acc_mm, type = &quot;l&quot;, xaxt = &quot;n&quot;, yaxt = &quot;n&quot;, ylab = &quot;&quot;, xlab = &quot;&quot;, col = &quot;darkblue&quot;, lty = 2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXhpcyhzaWRlID0gNClcbm10ZXh0KFwiQWNjdW11bGF0ZWQgUHJlY2lwaXRhdGlvbiAobW0pXCIsIHNpZGUgPSA0LCBsaW5lID0gMylcbmxlZ2VuZChcInRvcGxlZnRcIiwgYyhcIkV2ZW50XCIsIFwiQWNjdW11bGF0ZWRcIiksXG4gICAgICAgY29sID0gYyhcImRlZXBza3libHVlXCIsIFwiZGFya2JsdWVcIiksIGx0eSA9IGMoMSwgMikpXG5kZXYub2ZmKClcbmBgYCJ9 -->
+<pre class="r"><code>axis(side = 4)
+mtext(&quot;Accumulated Precipitation (mm)&quot;, side = 4, line = 3)
+legend(&quot;topleft&quot;, c(&quot;Event&quot;, &quot;Accumulated&quot;),
+       col = c(&quot;deepskyblue&quot;, &quot;darkblue&quot;), lty = c(1, 2))
+dev.off()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoibnVsbCBkZXZpY2UgXG4gICAgICAgICAgMSBcbiJ9 -->
+<pre><code>null device 
+          1 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="attempt-to-combine-figures-into-single-stacked-squashed" class="section level1">
+<h1>Attempt to combine figures into single stacked, SQUASHED</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBhdHRhY2goZGFpbHlfdGVzdClcbiMgcGFyKG1mcm93PWMoMiwxKSlcbiMgXG4jIHBhcihtYXIgPSBjKDUsIDUsIDMsIDUpKVxuIyBwbG90KGRhaWx5X3Rlc3QkRGF0ZSwgZGFpbHlfdGVzdCRWT0xtZWFuLCB0eXBlID0gXCJsXCIsIHlsYWIgPSBcIlZvbHVtZSAoYWMtZnQpXCIsIG1haW4gPSBcIlBvbmQgVm9sdW1lIHZzLiBQcmVjaXBpdGF0aW9uIEV2ZW50c1wiLCB4bGFiID0gXCJEYXRlXCIsIGNvbCA9IFwiZGFya2JsdWVcIiwgbHR5ID0gMilcbiMgcGFyKG5ldyA9IFRSVUUpXG4jIHBsb3QoZGFpbHlfdGVzdCREYXRlLCBkYWlseV90ZXN0JHByZWNpcF9ldmVudF9tbSwgdHlwZSA9IFwiaFwiLCB4YXh0ID0gXCJuXCIsIHlheHQgPSBcIm5cIiwgeWxhYiA9IFwiXCIsIHhsYWIgPSBcIlwiLCBjb2wgPSBcImRlZXBza3libHVlXCIpXG4jIGF4aXMoc2lkZSA9IDQpXG4jIG10ZXh0KFwiUHJlY2lwIChtbSlcIiwgc2lkZSA9IDQsIGxpbmUgPSAzKVxuIyBsZWdlbmQoXCJ0b3BsZWZ0XCIsIGMoXCJWb2wgKGFjLWZ0KVwiLCBcIlByZWNpcCAobW0pXCIpLFxuIyAgICAgICAgY29sID0gYyhcImRhcmtibHVlXCIsIFwiZGVlcHNreWJsdWVcIiksIGx0eSA9IGMoMiwgMSkpXG4jIFxuIyBwYXIobWFyID0gYyg1LCA1LCAzLCA1KSlcbiMgcGxvdChkYWlseV90ZXN0JERhdGUsIGRhaWx5X3Rlc3QkcHJlY2lwX2V2ZW50X21tLCB0eXBlID0gXCJoXCIsIHlsYWIgPSBcIlByZWNpcCAobW0pXCIsIG1haW4gPSBcIlByZWNpcGl0YXRpb24gRXZlbnRzIHZzLiBBY2N1bXVsYXRlZCBQcmVjaXBpdGF0aW9uXCIsIHhsYWIgPSBcIkRhdGVcIiwgY29sID0gXCJkZWVwc2t5Ymx1ZVwiKVxuIyBwYXIobmV3ID0gVFJVRSlcbiMgcGxvdChkYWlseV90ZXN0JERhdGUsIGRhaWx5X3Rlc3QkcHJlY2lwX2FjY19tbSwgdHlwZSA9IFwibFwiLCB4YXh0ID0gXCJuXCIsIHlheHQgPSBcIm5cIiwgeWxhYiA9IFwiXCIsIHhsYWIgPSBcIlwiLCBjb2wgPSBcImRhcmtibHVlXCIsIGx0eSA9IDIpXG4jIGF4aXMoc2lkZSA9IDQpXG4jIG10ZXh0KFwiUHJlY2lwIChtbSlcIiwgc2lkZSA9IDQsIGxpbmUgPSAzKVxuIyBsZWdlbmQoXCJ0b3BsZWZ0XCIsIGMoXCJQcmVjaXAgRXZlbnQgKG1tKVwiLCBcIkFjYyBQcmVjaXAgKG1tKVwiKSxcbiMgICAgICAgIGNvbCA9IGMoXCJkZWVwc2t5Ymx1ZVwiLCBcImRhcmtibHVlXCIpLCBsdHkgPSBjKDEsIDIpKVxuYGBgIn0= -->
+<pre class="r"><code># attach(daily_test)
+# par(mfrow=c(2,1))
+# 
+# par(mar = c(5, 5, 3, 5))
+# plot(daily_test$Date, daily_test$VOLmean, type = &quot;l&quot;, ylab = &quot;Volume (ac-ft)&quot;, main = &quot;Pond Volume vs. Precipitation Events&quot;, xlab = &quot;Date&quot;, col = &quot;darkblue&quot;, lty = 2)
+# par(new = TRUE)
+# plot(daily_test$Date, daily_test$precip_event_mm, type = &quot;h&quot;, xaxt = &quot;n&quot;, yaxt = &quot;n&quot;, ylab = &quot;&quot;, xlab = &quot;&quot;, col = &quot;deepskyblue&quot;)
+# axis(side = 4)
+# mtext(&quot;Precip (mm)&quot;, side = 4, line = 3)
+# legend(&quot;topleft&quot;, c(&quot;Vol (ac-ft)&quot;, &quot;Precip (mm)&quot;),
+#        col = c(&quot;darkblue&quot;, &quot;deepskyblue&quot;), lty = c(2, 1))
+# 
+# par(mar = c(5, 5, 3, 5))
+# plot(daily_test$Date, daily_test$precip_event_mm, type = &quot;h&quot;, ylab = &quot;Precip (mm)&quot;, main = &quot;Precipitation Events vs. Accumulated Precipitation&quot;, xlab = &quot;Date&quot;, col = &quot;deepskyblue&quot;)
+# par(new = TRUE)
+# plot(daily_test$Date, daily_test$precip_acc_mm, type = &quot;l&quot;, xaxt = &quot;n&quot;, yaxt = &quot;n&quot;, ylab = &quot;&quot;, xlab = &quot;&quot;, col = &quot;darkblue&quot;, lty = 2)
+# axis(side = 4)
+# mtext(&quot;Precip (mm)&quot;, side = 4, line = 3)
+# legend(&quot;topleft&quot;, c(&quot;Precip Event (mm)&quot;, &quot;Acc Precip (mm)&quot;),
+#        col = c(&quot;deepskyblue&quot;, &quot;darkblue&quot;), lty = c(1, 2))</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -358,9 +551,8 @@ cols(
 <!-- rnb-text-end -->
 </div>
 </div>
-</div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkFWTyBTdGVwIDE6IEJpbmQgRGF0YXNldHMiDQphdXRob3I6ICJBbm5hIEZyeWpvZmYtSHVuZyINCmRhdGU6ICJPY3RvYmVyIDYsIDIwMTgiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQojIyMjIERlc2NyaXB0aW9uOg0Kc3R1ZmYgdGhpcyBkb2VzDQoNCi0gQ29kZSBiYXNlZCBvbiBfX18gdHJpYWwgc2NyaXB0IGFuZCBfX19fdHJpYWwgc2NyaXB0DQoNCiMgTG9hZCBSZXF1aXJlZCBQYWNrYWdlcyANCmBgYHtyfQ0KbGlicmFyeShwbHlyKQ0KbGlicmFyeShkcGx5cikNCmxpYnJhcnkoZ2dwbG90MikNCmxpYnJhcnkobHVicmlkYXRlKQ0KbGlicmFyeShydmVzdCkNCmxpYnJhcnkocmVhZHIpDQoNCmBgYA0KDQoNCiMjIyMjIFN0ZXAgMTogTG9hZCBpbiBkYXRhIA0KDQoNCmBgYHtyfQ0KI1JlYWQgaW4gUFQgZGF0YQ0KUFQgPC0gcmVhZF9jc3YoIm91dHB1dC9BVk9fUFRjbGVhbmVkXzE3MTguY3N2IikgJT4lIA0KICByZW5hbWUoV1NFID0gQWRqdXN0ZWRfV1NFKSAlPiUNCiAgbXV0YXRlKFdTRSA9IHJvdW5kKFdTRSwgZGlnaXRzID0gMikpDQojQWRqdXN0IFdTRSB0byAyIGRlY2ltZWwgcGxhY2VzLiAgU3RhZmYgZ2FnZSByZWFkcyBhdCBjbSBsZXZlbCBjb3JyZWN0aW9uDQoNCg0KI1JlYWQgaW4gUHJlY2lwIERhdGENClBDUCA8LSByZWFkX2Nzdigib3V0cHV0L0NERUNwcmVjaXBfZWRpdGVkLmNzdiIpICU+JSANCiAgcmVuYW1lKERhdGVUaW1lID0gZGF0ZXRpbWUpDQoNCiNSZWFkIGluIFN0b3JhZ2UgQ2FwYWNpdHkgRGF0YQ0KU0MgPC0gcmVhZF9jc3YoImRhdGEvQVZPX1N0b3JhZ2VDYXBhY2l0eV8xY20uY3N2IikgJT4lIA0KICByZW5hbWUoV1NFID0gRUxFVkFUSU9OLCBWT0xtMyA9IFZPTFVNRSwgU0FtID0gQVJFQSkgJT4lIA0KICBtdXRhdGUoV1NFID0gcm91bmQoV1NFLCBkaWdpdHMgPSAyKSwgDQogICAgICAgICBWT0xhY2Z0ID0gVk9MbTMqMC4wMDA4MTA3MTQsDQogICAgICAgICBTQWFjID0gU0FtKjAuMDAwMjQ3MTA1KQ0KDQpgYGANCg0KDQoNCiMjIyMjIFN0ZXAgMjogQmluZCBkYXRhMSB0byBkYXRhMiANCmJlY2F1c2UgdXNpbmcgdGhpcyBjb2x1bW4NCg0KYGBge3J9DQp0ZXN0IDwtIFBUICU+JSANCiAgaW5uZXJfam9pbihQQ1AsIGJ5ID0gIkRhdGVUaW1lIikgJT4lIA0KICBpbm5lcl9qb2luKFNDLCBieSA9ICJXU0UiKQ0KYGBgDQoNCiMjIyMjIFN0ZXAgMzogQmluZCBkYXRhMiB0byBkYXRhMw0KYmVjYXVzZSB1c2luZyB0aGlzIGNvbHVtbg0KDQpgYGB7cn0NCg0KYGBgDQoNCiMjIyMgU3RlcCA0OiBEZXRlcm1pbmUgQ2F0Y2htZW50IEFyZWEgRHJhaW5pbmcgaW50byBBVk8NCiphZGQgY29sdW1uIGZvciB0b3RhbCBwcmVjaXAgdm9sdW1lIHZzLiBwb25kIHZvbHVtZSBnYWluKg0KYGBge3J9DQojIFBIRV9zdWJiYXNpbnMgPC0gcmVhZF9jc3YoImRhdGEvUEhFX3N1YmJhc2lucy5jc3YiKSANCiMgcG9uZF9zdWJzIDwtIFBIRV9zdWJiYXNpbnNbYygtMiwtNSwtNiwtNyksXQ0KIyBBVk9fY2F0Y2ggPC0gc3VtKHBvbmRfc3VicyRTaGFwZV9BcmVhKQ0KIyBBVk9fY2F0Y2gNCiAgDQpgYGANCg0KIyMjIyMgV3JpdGUgb3V0IHRvIENTVg0KTGFzdCB2ZXJzaW9uIHdyaXR0ZW4gb246IG9jdC4gNnRoIDIwMTggDQoNCmBgYHtyfQ0KDQpgYGANCg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkFWTyBTdGVwIDE6IEJpbmQgRGF0YXNldHMiDQphdXRob3I6ICJBbm5hIEZyeWpvZmYtSHVuZyINCmRhdGU6ICJPY3RvYmVyIDYsIDIwMTgiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQojIyMjIERlc2NyaXB0aW9uOg0Kc3R1ZmYgdGhpcyBkb2VzDQoNCi0gQ29kZSBiYXNlZCBvbiBfX18gdHJpYWwgc2NyaXB0IGFuZCBfX19fdHJpYWwgc2NyaXB0DQoNCiMgTG9hZCBSZXF1aXJlZCBQYWNrYWdlcyANCmBgYHtyfQ0KbGlicmFyeShwbHlyKQ0KbGlicmFyeShkcGx5cikNCmxpYnJhcnkoZ2dwbG90MikNCmxpYnJhcnkobHVicmlkYXRlKQ0KbGlicmFyeShydmVzdCkNCmxpYnJhcnkocmVhZHIpDQoNCmBgYA0KDQoNCiMjIyMjIFN0ZXAgMTogTG9hZCBpbiBkYXRhIA0KDQoNCmBgYHtyfQ0KI1JlYWQgaW4gUFQgZGF0YQ0KUFQgPC0gcmVhZF9jc3YoIm91dHB1dC9BVk9fUFRjbGVhbmVkXzE3MTguY3N2IikgJT4lIA0KICByZW5hbWUoV1NFID0gQWRqdXN0ZWRfV1NFKSAlPiUNCiAgbXV0YXRlKFdTRSA9IHJvdW5kKFdTRSwgZGlnaXRzID0gMikpDQojQWRqdXN0IFdTRSB0byAyIGRlY2ltZWwgcGxhY2VzLiAgU3RhZmYgZ2FnZSByZWFkcyBhdCBjbSBsZXZlbCBjb3JyZWN0aW9uDQoNCg0KI1JlYWQgaW4gUHJlY2lwIERhdGENClBDUCA8LSByZWFkX2Nzdigib3V0cHV0L0NERUNwcmVjaXBfZWRpdGVkLmNzdiIpICU+JSANCiAgcmVuYW1lKERhdGVUaW1lID0gZGF0ZXRpbWUpICU+JSANCiAgbXV0YXRlKHByZWNpcF9hY2NfbW0gPSBwcmVjaXBfYWNjX2luKjI1LjQpDQoNCiNSZWFkIGluIFN0b3JhZ2UgQ2FwYWNpdHkgRGF0YQ0KU0MgPC0gcmVhZF9jc3YoImRhdGEvQVZPX1N0b3JhZ2VDYXBhY2l0eV8xY20uY3N2IikgJT4lIA0KICByZW5hbWUoV1NFID0gRUxFVkFUSU9OLCBWT0xtMyA9IFZPTFVNRSwgU0FtID0gQVJFQSkgJT4lIA0KICBtdXRhdGUoV1NFID0gcm91bmQoV1NFLCBkaWdpdHMgPSAyKSwgDQogICAgICAgICBWT0xhY2Z0ID0gVk9MbTMqMC4wMDA4MTA3MTQsDQogICAgICAgICBTQWFjID0gU0FtKjAuMDAwMjQ3MTA1KQ0KDQpgYGANCg0KDQoNCiMjIyMjIFN0ZXAgMjogQmluZCBkYXRhMSB0byBkYXRhMiANCmJlY2F1c2UgdXNpbmcgdGhpcyBjb2x1bW4NCg0KYGBge3J9DQpwb25kZmx1eF8xNW1pbiA8LSBQVCAlPiUgDQogIGlubmVyX2pvaW4oUENQLCBieSA9ICJEYXRlVGltZSIpICU+JSANCiAgaW5uZXJfam9pbihTQywgYnkgPSAiV1NFIikgJT4lIA0KICBtdXRhdGUoRGF0ZSA9IGRhdGUoRGF0ZVRpbWUpKQ0KIyBEcm9wIHVud2FudGVkIGNvbHVtbnMgDQpgYGANCg0KIyMjIyMgU3RlcCAzOiBEYWlseSBTdW1tYXJ5DQoNCmBgYHtyfQ0KIyBTdW1tYXJpemUgYnkgZGF5DQojIyBOZWVkIHRvIHNldCBmaXJzdCBkaWZmZXJlbmNlIHZhbHVlcyB0byAwDQpwb25kZmx1eF9kYWlseSA8LSBwb25kZmx1eF8xNW1pbiAlPiUNCiAgZ3JvdXBfYnkoRGF0ZSkgJT4lIA0KICBzdW1tYXJpemUoV1NFbWluID0gbWluKFdTRSksIFdTRW1lYW4gPSBtZWFuKFdTRSksV1NFbWF4ID0gbWF4KFdTRSkscHJlY2lwX2V2ZW50X21tID0gc3VtKHByZWNpcF9ldmVudF9tbSksIHByZWNpcF9hY2NfbW0gPSBtYXgocHJlY2lwX2FjY19tbSksIFZPTG1pbiA9bWluKFZPTGFjZnQpLCBWT0xtZWFuID0gbWVhbihWT0xhY2Z0KSwgVk9MbWF4ID0gbWF4KFZPTGFjZnQpLCBTQW1pbiA9IG1pbihTQWFjKSwgU0FtZWFuID0gbWVhbihTQWFjKSwgU0FtYXggPSBtYXgoU0FhYykpICU+JSANCiAgbXV0YXRlKFZPTGNoZyA9IGMoVk9MbWF4WzFdLCBkaWZmKFZPTG1heCkpLFZPTGNoZyA9IGlmX2Vsc2UoVk9MY2hnID09IFZPTG1heCwgMCwgVk9MY2hnKSwgU0FjaGcgPSBjKFNBbWF4WzFdLCBkaWZmKFNBbWF4KSksIFNBY2hnID0gaWZfZWxzZShTQW1heCA9PSBTQWNoZywgMCwgU0FjaGcpLCBBY1BlckRheSA9IChWT0xjaGcvU0FtYXgpKQ0KICANCiMgTWF4IFdTRSANCg0KYGBgDQoNCiMjIyMgU3RlcCA0OiBFVCBSYXRlDQpgYGB7cn0NCnBsb3QocG9uZGZsdXhfZGFpbHkkRGF0ZSwgcG9uZGZsdXhfZGFpbHkkVk9MY2hnKSsNCiAgYWJsaW5lKGxtKHBvbmRmbHV4X2RhaWx5JFZPTGNoZ35wb25kZmx1eF9kYWlseSREYXRlKSwgY29sPSJyZWQiKQ0KDQptZWFuX3Rlc3QgPC0gbWVhbihwb25kZmx1eF9kYWlseSRWT0xjaGcpDQptZWFuX3Rlc3QNCm1lZGlhbl90ZXN0IDwtIG1lZGlhbihwb25kZmx1eF9kYWlseSRWT0xjaGcpDQptZWRpYW5fdGVzdA0Kc3VtbWFyeV9zdGF0cyA8LSBzdW1tYXJ5KHBvbmRmbHV4X2RhaWx5JFZPTGNoZykNCnN1bW1hcnlfc3RhdHMNCg0KRVR0ZXN0IDwtIGxtKHBvbmRmbHV4X2RhaWx5JFZPTGNoZ35wb25kZmx1eF9kYWlseSREYXRlKQ0KRVR0ZXN0DQpgYGANCg0KI0ZpbHRlciBNYXJjaCBhbmQgQXByaWwgU3Rvcm1zDQpgYGB7cn0NCm1hcmNoLnN0b3JtIDwtIGZpbHRlcihwb25kZmx1eF8xNW1pbiwgRGF0ZSA+PSAiMjAxOC0wMy0yMCIgJiBEYXRlIDw9IjIwMTgtMDMtMjIiKSAlPiUgDQogIG11dGF0ZShFdmVudF9BY2MgPSBjdW1zdW0ocHJlY2lwX2V2ZW50X21tKSwgVk9MZ2FpbiA9IFZPTGFjZnQtOC41NzE4ODQpDQoNCmFwcmlsLnN0b3JtIDwtIGZpbHRlcihwb25kZmx1eF8xNW1pbiwgRGF0ZSA+PSAiMjAxOC0wNC0wNiIgJiBEYXRlIDw9IjIwMTgtMDQtMDciKSAlPiUgDQogIG11dGF0ZShFdmVudF9BY2MgPSBjdW1zdW0ocHJlY2lwX2V2ZW50X21tKSwgVk9MZ2FpbiA9IFZPTGFjZnQtMjAuMTgwNjgpDQoNCmBgYA0KDQojUGxvdCBNYXJjaCBTdG9ybSBIeWV0b2dyYXBoDQpgYGB7cn0NCiNwbmcoImZpZ3MvbWFyY2hfc3Rvcm1faHlldG9ncmFwaC5wbmciLCB3aWR0aCA9IDYwMCwgaGVpZ2h0ID0gNDAwKQ0KcGFyKG1hciA9IGMoNSwgNSwgMywgNSkpDQpwbG90KG1hcmNoLnN0b3JtJERhdGVUaW1lLCBtYXJjaC5zdG9ybSRwcmVjaXBfZXZlbnRfbW0sIHR5cGUgPSAiaCIsIHlsYWIgPSAiUHJlY2lwaXRhdGlvbiBFdmVudCAobW0pIiwgbWFpbiA9ICJNYXJjaCBTdG9ybSBIeWV0b2dyYXBoIiwgeGxhYiA9ICJNYXJjaCAyMC0yMiwgMjAxOCIsIGNvbCA9ICJkZWVwc2t5Ymx1ZSIpDQpwYXIobmV3ID0gVFJVRSkNCnBsb3QobWFyY2guc3Rvcm0kRGF0ZVRpbWUsIG1hcmNoLnN0b3JtJEV2ZW50X0FjYywgdHlwZSA9ICJsIiwgeGF4dCA9ICJuIiwgeWF4dCA9ICJuIiwgeWxhYiA9ICIiLCB4bGFiID0gIiIsIGNvbCA9ICJkYXJrYmx1ZSIsIGx0eSA9IDIpDQpheGlzKHNpZGUgPSA0KQ0KbXRleHQoIkFjY3VtdWxhdGVkIFByZWNpcGl0YXRpb24gKG1tKSIsIHNpZGUgPSA0LCBsaW5lID0gMykNCmxlZ2VuZCgidG9wbGVmdCIsIGMoIkV2ZW50IiwgIkFjY3VtdWxhdGVkIiksDQogICAgICAgY29sID0gYygiZGVlcHNreWJsdWUiLCAiZGFya2JsdWUiKSwgbHR5ID0gYygxLCAyKSkNCiNkZXYub2ZmKCkNCmBgYA0KI1Bsb3QgTWFyY2ggU3Rvcm0gUG9uZCBGaWxsDQpgYGB7cn0NCiNwbmcoImZpZ3MvbWFyY2hfc3Rvcm1fcG9uZGZpbGwucG5nIiwgd2lkdGggPSA2MDAsIGhlaWdodCA9IDQwMCkNCnBhcihtYXIgPSBjKDUsIDUsIDMsIDUpKQ0KcGxvdChtYXJjaC5zdG9ybSREYXRlVGltZSwgbWFyY2guc3Rvcm0kcHJlY2lwX2V2ZW50X21tLCB0eXBlID0gImgiLCB5bGFiID0gIlByZWNpcGl0YXRpb24gKG1tKSIsIG1haW4gPSAiTWFyY2ggU3Rvcm0gUG9uZCBGaWxsIiwgeGxhYiA9ICJNYXJjaCAyMC0yMiwgMjAxOCIsIGNvbCA9ICJkZWVwc2t5Ymx1ZSIpDQpwYXIobmV3ID0gVFJVRSkNCnBsb3QobWFyY2guc3Rvcm0kRGF0ZVRpbWUsIGRlc3Bpa2UobWFyY2guc3Rvcm0kVk9MZ2FpbiwgcmVmZXJlbmNlPSJtZWRpYW4iLCBuID0gMSwgayA9IDMxKSwgdHlwZSA9ICJsIiwgeGF4dCA9ICJuIiwgeWF4dCA9ICJuIiwgeWxhYiA9ICJuIiwgeGxhYiA9ICJuIiwgY29sID0gImRhcmtibHVlIiwgbHR5ID0gMykNCmF4aXMoc2lkZSA9IDQpDQptdGV4dCgiQWNjdW11bGF0ZWQgVm9sdW1lIChhYy1mdCkiLCBzaWRlID0gNCwgbGluZSA9IDMpDQpsZWdlbmQoInRvcGxlZnQiLCBjKCJQcmVjaXAgRXZlbnQiLCAiUG9uZCBWb3VtZSIpLA0KICAgICAgIGNvbCA9IGMoImRlZXBza3libHVlIiwgImRhcmtibHVlIiksIGx0eSA9IGMoMSwgMikpDQojZGV2Lm9mZigpDQpgYGANCg0KDQoNCiNGaWx0ZXIgQXByaWwgU3Rvcm0gSHlldG9ncmFwaA0KYGBge3J9DQojcG5nKCJmaWdzL2FwcmlsX3N0b3JtX2h5ZXRvZ3JhcGgucG5nIiwgd2lkdGggPSA2MDAsIGhlaWdodCA9IDQwMCkNCnBhcihtYXIgPSBjKDUsIDUsIDMsIDUpKQ0KcGxvdChhcHJpbC5zdG9ybSREYXRlVGltZSwgYXByaWwuc3Rvcm0kcHJlY2lwX2V2ZW50X21tLCB0eXBlID0gImgiLCB5bGFiID0gIlByZWNpcGl0YXRpb24gRXZlbnQgKG1tKSIsIG1haW4gPSAiQXByaWwgU3Rvcm0gSHlldG9ncmFwaCIsIHhsYWIgPSAiQXByaWwgNi03LCAyMDE4IiwgY29sID0gImRlZXBza3libHVlIikNCnBhcihuZXcgPSBUUlVFKQ0KcGxvdChhcHJpbC5zdG9ybSREYXRlVGltZSwgYXByaWwuc3Rvcm0kRXZlbnRfQWNjLCB0eXBlID0gImwiLCB4YXh0ID0gIm4iLCB5YXh0ID0gIm4iLCB5bGFiID0gIiIsIHhsYWIgPSAiIiwgY29sID0gImRhcmtibHVlIiwgbHR5ID0gMikNCmF4aXMoc2lkZSA9IDQpDQptdGV4dCgiQWNjdW11bGF0ZWQgUHJlY2lwaXRhdGlvbiAobW0pIiwgc2lkZSA9IDQsIGxpbmUgPSAzKQ0KbGVnZW5kKCJ0b3BsZWZ0IiwgYygiRXZlbnQiLCAiQWNjdW11bGF0ZWQiKSwNCiAgICAgICBjb2wgPSBjKCJkZWVwc2t5Ymx1ZSIsICJkYXJrYmx1ZSIpLCBsdHkgPSBjKDEsIDIpKQ0KI2Rldi5vZmYoKQ0KYGBgDQoNCiNQbG90IEFwcmlsIFN0b3JtIFBvbmQgRmlsbA0KYGBge3J9DQojcG5nKCJmaWdzL2FwcmlsX3N0b3JtX3BvbmRmaWxsLnBuZyIsIHdpZHRoID0gNjAwLCBoZWlnaHQgPSA0MDApDQpwYXIobWFyID0gYyg1LCA1LCAzLCA1KSkNCnBsb3QoYXByaWwuc3Rvcm0kRGF0ZVRpbWUsIGFwcmlsLnN0b3JtJHByZWNpcF9ldmVudF9tbSwgdHlwZSA9ICJoIiwgeWxhYiA9ICJQcmVjaXBpdGF0aW9uIChtbSkiLCBtYWluID0gIkFwcmlsIFN0b3JtIFBvbmQgRmlsbCIsIHhsYWIgPSAiQXByaWwgNi03LCAyMDE4IiwgY29sID0gImRlZXBza3libHVlIikNCnBhcihuZXcgPSBUUlVFKQ0KcGxvdChhcHJpbC5zdG9ybSREYXRlVGltZSwgZGVzcGlrZShhcHJpbC5zdG9ybSRWT0xnYWluLCByZWZlcmVuY2U9Im1lZGlhbiIsIG4gPSAxLCBrID0gMzEpLCB0eXBlID0gImwiLCB4YXh0ID0gIm4iLCB5YXh0ID0gIm4iLCB5bGFiID0gIiIsIHhsYWIgPSAiIiwgY29sID0gImRhcmtibHVlIiwgbHR5ID0gMykNCmF4aXMoc2lkZSA9IDQpDQptdGV4dCgiQWNjdW11bGF0ZWQgVm9sdW1lIChhYy1mdCkiLCBzaWRlID0gNCwgbGluZSA9IDMpDQpsZWdlbmQoInRvcGxlZnQiLCBjKCJQcmVjaXAgRXZlbnQiLCAiUG9uZCBWb3VtZSIpLA0KICAgICAgIGNvbCA9IGMoImRlZXBza3libHVlIiwgImRhcmtibHVlIiksIGx0eSA9IGMoMSwgMykpDQojZGV2Lm9mZigpDQpgYGANCg0KDQojUGxvdCBTZWFzb25hbCBQb25kIFZvbHVtZSBhZ2FpbnN0IFByZWNpcGl0YXRpb24gRXZlbnRzIA0KYGBge3J9DQojcG5nKCJmaWdzL3NlYXNvbl9maWxsZHJhd2Rvd24ucG5nIiwgd2lkdGggPSA2MDAsIGhlaWdodCA9IDQwMCkNCg0KcGFyKG1hciA9IGMoNSwgNSwgMywgNSkpDQpwbG90KHBvbmRmbHV4X2RhaWx5JERhdGUsIHBvbmRmbHV4X2RhaWx5JHByZWNpcF9ldmVudF9tbSwgdHlwZSA9ICJoIiwgeWxhYiA9ICJQcmVjaXBpdGF0aW9uIChtbSkiLCBtYWluID0gIlBvbmQgRmlsbCBhbmQgRHJhd2Rvd24iLCB4bGFiID0gIk5vdmVtYmVyIDYsIDIwMTcgLSBKdWx5IDIzLCAyMDE4IiwgY29sID0gImRlZXBza3libHVlIiwgbHR5ID0gMSkNCnBhcihuZXcgPSBUUlVFKQ0KcGxvdChwb25kZmx1eF9kYWlseSREYXRlLCBwb25kZmx1eF9kYWlseSRWT0xtZWFuLCB0eXBlID0gImwiLCB4YXh0ID0gIm4iLCB5YXh0ID0gIm4iLCB5bGFiID0gIiIsIHhsYWIgPSAiIiwgY29sID0gImRhcmtibHVlIiwgbHR5ID0gMikNCmF4aXMoc2lkZSA9IDQpDQptdGV4dCgiVm9sdW1lIChhYy1mdCkiLCBzaWRlID0gNCwgbGluZSA9IDMpDQpsZWdlbmQoInRvcGxlZnQiLCBjKCJQcmVjaXAgRXZlbnQiLCJQb25kIFZvbHVtZSIpLA0KICAgICAgIGNvbCA9IGMoImRlZXBza3libHVlIiwgImRhcmtibHVlIiksIGx0eSA9IGMoMSwgMikpDQoNCiNkZXYub2ZmKCkNCg0KYGBgDQojUGxvdCBQcmVjaXBpdGF0aW9uIEV2ZW50cyBBZ2FpbnN0IEFjY3VtdWxhdGVkIFByZWNpcGl0YXRpb24NCmBgYHtyfQ0KI3BuZygiZmlncy9zZWFzb25fcHJlY2lwaXRhdGlvbi5wbmciLCB3aWR0aCA9IDYwMCwgaGVpZ2h0ID0gNDAwKQ0KDQpwYXIobWFyID0gYyg1LCA1LCAzLCA1KSkNCnBsb3QocG9uZGZsdXhfZGFpbHkkRGF0ZSwgcG9uZGZsdXhfZGFpbHkkcHJlY2lwX2V2ZW50X21tLCB0eXBlID0gImgiLCB5bGFiID0gIlByZWNpcGl0YXRpb24gRXZlbnQgKG1tKSIsIG1haW4gPSAiUHJlY2lwaXRhdGlvbiIsIHhsYWIgPSAiTm92ZW1iZXIgNiwgMjAxNyAtIEp1bHkgMjMsIDIwMTgiLCBjb2wgPSAiZGVlcHNreWJsdWUiKQ0KcGFyKG5ldyA9IFRSVUUpDQpwbG90KHBvbmRmbHV4X2RhaWx5JERhdGUsIHBvbmRmbHV4X2RhaWx5JHByZWNpcF9hY2NfbW0sIHR5cGUgPSAibCIsIHhheHQgPSAibiIsIHlheHQgPSAibiIsIHlsYWIgPSAiIiwgeGxhYiA9ICIiLCBjb2wgPSAiZGFya2JsdWUiLCBsdHkgPSAyKQ0KYXhpcyhzaWRlID0gNCkNCm10ZXh0KCJBY2N1bXVsYXRlZCBQcmVjaXBpdGF0aW9uIChtbSkiLCBzaWRlID0gNCwgbGluZSA9IDMpDQpsZWdlbmQoInRvcGxlZnQiLCBjKCJFdmVudCIsICJBY2N1bXVsYXRlZCIpLA0KICAgICAgIGNvbCA9IGMoImRlZXBza3libHVlIiwgImRhcmtibHVlIiksIGx0eSA9IGMoMSwgMikpDQoNCiNkZXYub2ZmKCkNCg0KYGBgDQoNCiNBdHRlbXB0IHRvIGNvbWJpbmUgZmlndXJlcyBpbnRvIHNpbmdsZSBzdGFja2VkLCBTUVVBU0hFRA0KYGBge3J9DQojIGF0dGFjaChkYWlseV90ZXN0KQ0KIyBwYXIobWZyb3c9YygyLDEpKQ0KIyANCiMgcGFyKG1hciA9IGMoNSwgNSwgMywgNSkpDQojIHBsb3QoZGFpbHlfdGVzdCREYXRlLCBkYWlseV90ZXN0JFZPTG1lYW4sIHR5cGUgPSAibCIsIHlsYWIgPSAiVm9sdW1lIChhYy1mdCkiLCBtYWluID0gIlBvbmQgVm9sdW1lIHZzLiBQcmVjaXBpdGF0aW9uIEV2ZW50cyIsIHhsYWIgPSAiRGF0ZSIsIGNvbCA9ICJkYXJrYmx1ZSIsIGx0eSA9IDIpDQojIHBhcihuZXcgPSBUUlVFKQ0KIyBwbG90KGRhaWx5X3Rlc3QkRGF0ZSwgZGFpbHlfdGVzdCRwcmVjaXBfZXZlbnRfbW0sIHR5cGUgPSAiaCIsIHhheHQgPSAibiIsIHlheHQgPSAibiIsIHlsYWIgPSAiIiwgeGxhYiA9ICIiLCBjb2wgPSAiZGVlcHNreWJsdWUiKQ0KIyBheGlzKHNpZGUgPSA0KQ0KIyBtdGV4dCgiUHJlY2lwIChtbSkiLCBzaWRlID0gNCwgbGluZSA9IDMpDQojIGxlZ2VuZCgidG9wbGVmdCIsIGMoIlZvbCAoYWMtZnQpIiwgIlByZWNpcCAobW0pIiksDQojICAgICAgICBjb2wgPSBjKCJkYXJrYmx1ZSIsICJkZWVwc2t5Ymx1ZSIpLCBsdHkgPSBjKDIsIDEpKQ0KIyANCiMgcGFyKG1hciA9IGMoNSwgNSwgMywgNSkpDQojIHBsb3QoZGFpbHlfdGVzdCREYXRlLCBkYWlseV90ZXN0JHByZWNpcF9ldmVudF9tbSwgdHlwZSA9ICJoIiwgeWxhYiA9ICJQcmVjaXAgKG1tKSIsIG1haW4gPSAiUHJlY2lwaXRhdGlvbiBFdmVudHMgdnMuIEFjY3VtdWxhdGVkIFByZWNpcGl0YXRpb24iLCB4bGFiID0gIkRhdGUiLCBjb2wgPSAiZGVlcHNreWJsdWUiKQ0KIyBwYXIobmV3ID0gVFJVRSkNCiMgcGxvdChkYWlseV90ZXN0JERhdGUsIGRhaWx5X3Rlc3QkcHJlY2lwX2FjY19tbSwgdHlwZSA9ICJsIiwgeGF4dCA9ICJuIiwgeWF4dCA9ICJuIiwgeWxhYiA9ICIiLCB4bGFiID0gIiIsIGNvbCA9ICJkYXJrYmx1ZSIsIGx0eSA9IDIpDQojIGF4aXMoc2lkZSA9IDQpDQojIG10ZXh0KCJQcmVjaXAgKG1tKSIsIHNpZGUgPSA0LCBsaW5lID0gMykNCiMgbGVnZW5kKCJ0b3BsZWZ0IiwgYygiUHJlY2lwIEV2ZW50IChtbSkiLCAiQWNjIFByZWNpcCAobW0pIiksDQojICAgICAgICBjb2wgPSBjKCJkZWVwc2t5Ymx1ZSIsICJkYXJrYmx1ZSIpLCBsdHkgPSBjKDEsIDIpKQ0KYGBgDQoNCiMjIyMjIFdyaXRlIG91dCB0byBDU1YNCkxhc3QgdmVyc2lvbiB3cml0dGVuIG9uOiBvY3QuIDZ0aCAyMDE4IA0KDQpgYGB7cn0NCg0KYGBgDQoNCg==</div>
 
 
 

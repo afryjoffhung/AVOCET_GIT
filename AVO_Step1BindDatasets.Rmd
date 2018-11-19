@@ -35,7 +35,8 @@ PT <- read_csv("output/AVO_PTcleaned_1718.csv") %>%
 
 #Read in Precip Data
 PCP <- read_csv("output/CDECprecip_edited.csv") %>% 
-  rename(DateTime = datetime)
+  rename(DateTime = datetime) %>% 
+  mutate(precip_acc_mm = precip_acc_in*25.4)
 
 #Read in Storage Capacity Data
 SC <- read_csv("data/AVO_StorageCapacity_1cm.csv") %>% 
@@ -52,26 +53,166 @@ SC <- read_csv("data/AVO_StorageCapacity_1cm.csv") %>%
 because using this column
 
 ```{r}
-test <- PT %>% 
+pondflux_15min <- PT %>% 
   inner_join(PCP, by = "DateTime") %>% 
-  inner_join(SC, by = "WSE")
+  inner_join(SC, by = "WSE") %>% 
+  mutate(Date = date(DateTime))
+# Drop unwanted columns 
 ```
 
-##### Step 3: Bind data2 to data3
-because using this column
+##### Step 3: Daily Summary
 
 ```{r}
-
-```
-
-#### Step 4: Determine Catchment Area Draining into AVO
-*add column for total precip volume vs. pond volume gain*
-```{r}
-# PHE_subbasins <- read_csv("data/PHE_subbasins.csv") 
-# pond_subs <- PHE_subbasins[c(-2,-5,-6,-7),]
-# AVO_catch <- sum(pond_subs$Shape_Area)
-# AVO_catch
+# Summarize by day
+## Need to set first difference values to 0
+pondflux_daily <- pondflux_15min %>%
+  group_by(Date) %>% 
+  summarize(WSEmin = min(WSE), WSEmean = mean(WSE),WSEmax = max(WSE),precip_event_mm = sum(precip_event_mm), precip_acc_mm = max(precip_acc_mm), VOLmin =min(VOLacft), VOLmean = mean(VOLacft), VOLmax = max(VOLacft), SAmin = min(SAac), SAmean = mean(SAac), SAmax = max(SAac)) %>% 
+  mutate(VOLchg = c(VOLmax[1], diff(VOLmax)),VOLchg = if_else(VOLchg == VOLmax, 0, VOLchg), SAchg = c(SAmax[1], diff(SAmax)), SAchg = if_else(SAmax == SAchg, 0, SAchg), AcPerDay = (VOLchg/SAmax))
   
+# Max WSE 
+
+```
+
+#### Step 4: ET Rate
+```{r}
+plot(pondflux_daily$Date, pondflux_daily$VOLchg)+
+  abline(lm(pondflux_daily$VOLchg~pondflux_daily$Date), col="red")
+
+mean_test <- mean(pondflux_daily$VOLchg)
+mean_test
+median_test <- median(pondflux_daily$VOLchg)
+median_test
+summary_stats <- summary(pondflux_daily$VOLchg)
+summary_stats
+
+ETtest <- lm(pondflux_daily$VOLchg~pondflux_daily$Date)
+ETtest
+```
+
+#Filter March and April Storms
+```{r}
+march.storm <- filter(pondflux_15min, Date >= "2018-03-20" & Date <="2018-03-22") %>% 
+  mutate(Event_Acc = cumsum(precip_event_mm), VOLgain = VOLacft-8.571884)
+
+april.storm <- filter(pondflux_15min, Date >= "2018-04-06" & Date <="2018-04-07") %>% 
+  mutate(Event_Acc = cumsum(precip_event_mm), VOLgain = VOLacft-20.18068)
+
+```
+
+#Plot March Storm Hyetograph
+```{r}
+#png("figs/march_storm_hyetograph.png", width = 600, height = 400)
+par(mar = c(5, 5, 3, 5))
+plot(march.storm$DateTime, march.storm$precip_event_mm, type = "h", ylab = "Precipitation Event (mm)", main = "March Storm Hyetograph", xlab = "March 20-22, 2018", col = "deepskyblue")
+par(new = TRUE)
+plot(march.storm$DateTime, march.storm$Event_Acc, type = "l", xaxt = "n", yaxt = "n", ylab = "", xlab = "", col = "darkblue", lty = 2)
+axis(side = 4)
+mtext("Accumulated Precipitation (mm)", side = 4, line = 3)
+legend("topleft", c("Event", "Accumulated"),
+       col = c("deepskyblue", "darkblue"), lty = c(1, 2))
+#dev.off()
+```
+#Plot March Storm Pond Fill
+```{r}
+#png("figs/march_storm_pondfill.png", width = 600, height = 400)
+par(mar = c(5, 5, 3, 5))
+plot(march.storm$DateTime, march.storm$precip_event_mm, type = "h", ylab = "Precipitation (mm)", main = "March Storm Pond Fill", xlab = "March 20-22, 2018", col = "deepskyblue")
+par(new = TRUE)
+plot(march.storm$DateTime, despike(march.storm$VOLgain, reference="median", n = 1, k = 31), type = "l", xaxt = "n", yaxt = "n", ylab = "n", xlab = "n", col = "darkblue", lty = 3)
+axis(side = 4)
+mtext("Accumulated Volume (ac-ft)", side = 4, line = 3)
+legend("topleft", c("Precip Event", "Pond Voume"),
+       col = c("deepskyblue", "darkblue"), lty = c(1, 2))
+#dev.off()
+```
+
+
+
+#Filter April Storm Hyetograph
+```{r}
+#png("figs/april_storm_hyetograph.png", width = 600, height = 400)
+par(mar = c(5, 5, 3, 5))
+plot(april.storm$DateTime, april.storm$precip_event_mm, type = "h", ylab = "Precipitation Event (mm)", main = "April Storm Hyetograph", xlab = "April 6-7, 2018", col = "deepskyblue")
+par(new = TRUE)
+plot(april.storm$DateTime, april.storm$Event_Acc, type = "l", xaxt = "n", yaxt = "n", ylab = "", xlab = "", col = "darkblue", lty = 2)
+axis(side = 4)
+mtext("Accumulated Precipitation (mm)", side = 4, line = 3)
+legend("topleft", c("Event", "Accumulated"),
+       col = c("deepskyblue", "darkblue"), lty = c(1, 2))
+#dev.off()
+```
+
+#Plot April Storm Pond Fill
+```{r}
+#png("figs/april_storm_pondfill.png", width = 600, height = 400)
+par(mar = c(5, 5, 3, 5))
+plot(april.storm$DateTime, april.storm$precip_event_mm, type = "h", ylab = "Precipitation (mm)", main = "April Storm Pond Fill", xlab = "April 6-7, 2018", col = "deepskyblue")
+par(new = TRUE)
+plot(april.storm$DateTime, despike(april.storm$VOLgain, reference="median", n = 1, k = 31), type = "l", xaxt = "n", yaxt = "n", ylab = "", xlab = "", col = "darkblue", lty = 3)
+axis(side = 4)
+mtext("Accumulated Volume (ac-ft)", side = 4, line = 3)
+legend("topleft", c("Precip Event", "Pond Voume"),
+       col = c("deepskyblue", "darkblue"), lty = c(1, 3))
+#dev.off()
+```
+
+
+#Plot Seasonal Pond Volume against Precipitation Events 
+```{r}
+#png("figs/season_filldrawdown.png", width = 600, height = 400)
+
+par(mar = c(5, 5, 3, 5))
+plot(pondflux_daily$Date, pondflux_daily$precip_event_mm, type = "h", ylab = "Precipitation (mm)", main = "Pond Fill and Drawdown", xlab = "November 6, 2017 - July 23, 2018", col = "deepskyblue", lty = 1)
+par(new = TRUE)
+plot(pondflux_daily$Date, pondflux_daily$VOLmean, type = "l", xaxt = "n", yaxt = "n", ylab = "", xlab = "", col = "darkblue", lty = 2)
+axis(side = 4)
+mtext("Volume (ac-ft)", side = 4, line = 3)
+legend("topleft", c("Precip Event","Pond Volume"),
+       col = c("deepskyblue", "darkblue"), lty = c(1, 2))
+
+#dev.off()
+
+```
+#Plot Precipitation Events Against Accumulated Precipitation
+```{r}
+#png("figs/season_precipitation.png", width = 600, height = 400)
+
+par(mar = c(5, 5, 3, 5))
+plot(pondflux_daily$Date, pondflux_daily$precip_event_mm, type = "h", ylab = "Precipitation Event (mm)", main = "Precipitation", xlab = "November 6, 2017 - July 23, 2018", col = "deepskyblue")
+par(new = TRUE)
+plot(pondflux_daily$Date, pondflux_daily$precip_acc_mm, type = "l", xaxt = "n", yaxt = "n", ylab = "", xlab = "", col = "darkblue", lty = 2)
+axis(side = 4)
+mtext("Accumulated Precipitation (mm)", side = 4, line = 3)
+legend("topleft", c("Event", "Accumulated"),
+       col = c("deepskyblue", "darkblue"), lty = c(1, 2))
+
+#dev.off()
+
+```
+
+#Attempt to combine figures into single stacked, SQUASHED
+```{r}
+# attach(daily_test)
+# par(mfrow=c(2,1))
+# 
+# par(mar = c(5, 5, 3, 5))
+# plot(daily_test$Date, daily_test$VOLmean, type = "l", ylab = "Volume (ac-ft)", main = "Pond Volume vs. Precipitation Events", xlab = "Date", col = "darkblue", lty = 2)
+# par(new = TRUE)
+# plot(daily_test$Date, daily_test$precip_event_mm, type = "h", xaxt = "n", yaxt = "n", ylab = "", xlab = "", col = "deepskyblue")
+# axis(side = 4)
+# mtext("Precip (mm)", side = 4, line = 3)
+# legend("topleft", c("Vol (ac-ft)", "Precip (mm)"),
+#        col = c("darkblue", "deepskyblue"), lty = c(2, 1))
+# 
+# par(mar = c(5, 5, 3, 5))
+# plot(daily_test$Date, daily_test$precip_event_mm, type = "h", ylab = "Precip (mm)", main = "Precipitation Events vs. Accumulated Precipitation", xlab = "Date", col = "deepskyblue")
+# par(new = TRUE)
+# plot(daily_test$Date, daily_test$precip_acc_mm, type = "l", xaxt = "n", yaxt = "n", ylab = "", xlab = "", col = "darkblue", lty = 2)
+# axis(side = 4)
+# mtext("Precip (mm)", side = 4, line = 3)
+# legend("topleft", c("Precip Event (mm)", "Acc Precip (mm)"),
+#        col = c("deepskyblue", "darkblue"), lty = c(1, 2))
 ```
 
 ##### Write out to CSV

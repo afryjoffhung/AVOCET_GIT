@@ -13,6 +13,8 @@ library(dplyr)
 library(CDECRetrieve)
 library(lubridate)
 library(rvest)
+library(tidyr)
+library(readr)
 ```
 
 
@@ -30,14 +32,28 @@ library(rvest)
 # write_csv(precip_acc, "output/CDECprecip_edited.csv")
 
 #Piped
-precip_acc <- cdec_query(station ='ucm', sensor_num =2, dur_code ='E', start_date ='2017-11-06', end_date ='2018-07-23') %>% 
+# Download CDEC data for UCM weather station for 2018WY 10/1/2017-9/30/2018
+# Download entire water year - dataset will filter on its own when joined to PT dataset but now you will be able to generate stats for the entire water year
+# Original units: Accumuated Precip (inches)
+# Calculate event data from accumulated
+# Convert units to mm 
+precip_acc <- cdec_query(station ='ucm', sensor_num =2, dur_code ='E', start_date ='2017-10-01', end_date ='2018-09-30') %>% 
   rename(precip_acc_in = parameter_value ) %>% 
-  select(-parameter_cd) %>% 
+  select(-parameter_cd) %>%
   filter(complete.cases(.)) %>%
-  mutate(precip_event_in = c(precip_acc_in[1], diff(precip_acc_in)),
+  mutate(precip_acc_mm = (25.4*precip_acc_in),
+         precip_event_in = c(precip_acc_in[1], diff(precip_acc_in)),
          precip_event_in = if_else(precip_acc_in == precip_event_in, 0, precip_event_in),
-         precip_event_mm = 25.4*precip_event_in) #%>% 
-  #write_csv("output/CDECprecip_edited.csv")
+         precip_event_mm = 25.4*precip_event_in) %>% 
+  write_csv("output/UCMCDECprecip_WY2018.csv")
+
+##Code improvements: 
+#1. Download CDEC dataseries for complete water year, input date returns start of day, not end.  Could download 10-1 thourgh 10-1 and drop last row
+#2. Replace NA and complete missing date/time series
+## Currently a few records that would not affect calculations 
+
+#complete(datetime = seq.POSIXt("2017-10-01 00:00:00", "2018-09-30 00:00:00", by="minute")) %>% 
+#replace_na(precip_acc_in, 0) %>%
   
 ```
 
