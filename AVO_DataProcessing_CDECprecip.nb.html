@@ -192,14 +192,6 @@ library(rvest)
 library(tidyr)
 library(readr)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTog46S847ixcmVhZHLjpLzjuLJcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20g46S847ixcGFja2FnZTpydmVzdOOkvOO4sjpcblxuICAgIGd1ZXNzX2VuY29kaW5nXG4ifQ== -->
-<pre><code>
-Attaching package: 㤼㸱readr㤼㸲
-
-The following object is masked from 㤼㸱package:rvest㤼㸲:
-
-    guess_encoding</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -207,8 +199,24 @@ The following object is masked from 㤼㸱package:rvest㤼㸲:
 <h1>Download CDEC Data</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJlY2lwX2FjYyA8LSBjZGVjX3F1ZXJ5KHN0YXRpb24gPSd1Y20nLCBzZW5zb3JfbnVtID0yLCBkdXJfY29kZSA9J0UnLCBzdGFydF9kYXRlID0nMjAxNy0xMC0wMScsIGVuZF9kYXRlID0nMjAxOC0xMC0wMScpICU+JSBcbiAgcmVuYW1lKHByZWNpcF9hY2NfaW4gPSBwYXJhbWV0ZXJfdmFsdWUgKSAlPiUgXG4gIHNlbGVjdCgtcGFyYW1ldGVyX2NkKSAlPiVcbiAgZmlsdGVyKGNvbXBsZXRlLmNhc2VzKC4pKSAlPiVcbiAgbXV0YXRlKHByZWNpcF9hY2NfbW0gPSAoMjUuNCpwcmVjaXBfYWNjX2luKSxcbiAgICAgICAgIHByZWNpcF9ldmVudF9pbiA9IGMocHJlY2lwX2FjY19pblsxXSwgZGlmZihwcmVjaXBfYWNjX2luKSksXG4gICAgICAgICBwcmVjaXBfZXZlbnRfaW4gPSBpZl9lbHNlKHByZWNpcF9hY2NfaW4gPT0gcHJlY2lwX2V2ZW50X2luLCAwLCBwcmVjaXBfZXZlbnRfaW4pLFxuICAgICAgICAgcHJlY2lwX2V2ZW50X21tID0gMjUuNCpwcmVjaXBfZXZlbnRfaW4pICU+JSBcbiAgd3JpdGVfY3N2KFwib3V0cHV0L1VDTUNERUNwcmVjaXBfV1kyMDE4LmNzdlwiKVxuXG5gYGAifQ== -->
-<pre class="r"><code>precip_acc &lt;- cdec_query(station ='ucm', sensor_num =2, dur_code ='E', start_date ='2017-10-01', end_date ='2018-10-01') %&gt;% 
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyAjUFJFQ0lQSVRBVElPTiwgQUNDVU1VTEFURUQsIElOQ0hFU1xuIyAjIyMgTmVlZCB0byBjb252ZXJ0IHRvIGV2ZW50c1xuIyBwcmVjaXBfYWNjIDwtIGNkZWNfcXVlcnkoaWQ9J3VjbScsIHNlbnNvcj0yLCBpbnRlcnZhbD0nRScsIHN0YXJ0PScyMDE3LTExLTA2JywgZW5kPScyMDE4LTA3LTIzJylcbiMgcHJlY2lwX2FjYyA8LSBwcmVjaXBfYWNjW2NvbXBsZXRlLmNhc2VzKHByZWNpcF9hY2MpLCBdXG4jIG5hbWVzKHByZWNpcF9hY2MpWzRdPC1cInByZWNpcF9hY2NfaW5cIlxuIyBwcmVjaXBfYWNjJHByZWNpcF9ldmVudF9pbiA8LSBjKHByZWNpcF9hY2MkcHJlY2lwX2FjY19pblsxXSwgZGlmZihwcmVjaXBfYWNjJHByZWNpcF9hY2NfaW4pKVxuIyAjUmVwbGFjZSBmaXJzdCBjb2x1bW4gdmFsdWUgYW5kIG5lZ2F0aXZlIHZhbHVlIHRvIDBcbiMgcHJlY2lwX2FjYyRwcmVjaXBfZXZlbnRfaW4gPC0gaWZfZWxzZShwcmVjaXBfYWNjJHByZWNpcF9ldmVudF9pbjwwLCAwLCBwcmVjaXBfYWNjJHByZWNpcF9ldmVudF9pbilcbiMgcHJlY2lwX2FjYyRwcmVjaXBfZXZlbnRfaW4gPC0gaWZfZWxzZShwcmVjaXBfYWNjJHByZWNpcF9ldmVudF9pbiA9PSBwcmVjaXBfYWNjJHByZWNpcF9ldmVudF9pbiwgMCwgcHJlY2lwX2FjYyRwcmVjaXBfZXZlbnRfaW4pXG4jIHdyaXRlX2NzdihwcmVjaXBfYWNjLCBcIm91dHB1dC9DREVDcHJlY2lwX2VkaXRlZC5jc3ZcIilcbiNQaXBlZFxuIyBEb3dubG9hZCBDREVDIGRhdGEgZm9yIFVDTSB3ZWF0aGVyIHN0YXRpb24gZm9yIDIwMThXWSAxMC8xLzIwMTctOS8zMC8yMDE4XG4jIERvd25sb2FkIGVudGlyZSB3YXRlciB5ZWFyIC0gZGF0YXNldCB3aWxsIGZpbHRlciBvbiBpdHMgb3duIHdoZW4gam9pbmVkIHRvIFBUIGRhdGFzZXQgYnV0IG5vdyB5b3Ugd2lsbCBiZSBhYmxlIHRvIGdlbmVyYXRlIHN0YXRzIGZvciB0aGUgZW50aXJlIHdhdGVyIHllYXJcbiMgT3JpZ2luYWwgdW5pdHM6IEFjY3VtdWF0ZWQgUHJlY2lwIChpbmNoZXMpXG4jIENhbGN1bGF0ZSBldmVudCBkYXRhIGZyb20gYWNjdW11bGF0ZWRcbiMgQ29udmVydCB1bml0cyB0byBtbSBcbnByZWNpcF9hY2MgPC0gY2RlY19xdWVyeShzdGF0aW9uID0ndWNtJywgc2Vuc29yX251bSA9MiwgZHVyX2NvZGUgPSdFJywgc3RhcnRfZGF0ZSA9JzIwMTctMTAtMDEnLCBlbmRfZGF0ZSA9JzIwMTgtMDktMzAnKSAlPiUgXG4gIHJlbmFtZShwcmVjaXBfYWNjX2luID0gcGFyYW1ldGVyX3ZhbHVlICkgJT4lIFxuICBzZWxlY3QoLXBhcmFtZXRlcl9jZCkgJT4lXG4gIGZpbHRlcihjb21wbGV0ZS5jYXNlcyguKSkgJT4lXG4gIG11dGF0ZShwcmVjaXBfYWNjX21tID0gKDI1LjQqcHJlY2lwX2FjY19pbiksXG4gICAgICAgICBwcmVjaXBfZXZlbnRfaW4gPSBjKHByZWNpcF9hY2NfaW5bMV0sIGRpZmYocHJlY2lwX2FjY19pbikpLFxuICAgICAgICAgcHJlY2lwX2V2ZW50X2luID0gaWZfZWxzZShwcmVjaXBfYWNjX2luID09IHByZWNpcF9ldmVudF9pbiwgMCwgcHJlY2lwX2V2ZW50X2luKSxcbiAgICAgICAgIHByZWNpcF9ldmVudF9tbSA9IDI1LjQqcHJlY2lwX2V2ZW50X2luKSAlPiUgXG4gIHdyaXRlX2NzdihcIm91dHB1dC9VQ01DREVDcHJlY2lwX1dZMjAxOC5jc3ZcIilcbmBgYCJ9 -->
+<pre class="r"><code># #PRECIPITATION, ACCUMULATED, INCHES
+# ### Need to convert to events
+# precip_acc &lt;- cdec_query(id='ucm', sensor=2, interval='E', start='2017-11-06', end='2018-07-23')
+# precip_acc &lt;- precip_acc[complete.cases(precip_acc), ]
+# names(precip_acc)[4]&lt;-&quot;precip_acc_in&quot;
+# precip_acc$precip_event_in &lt;- c(precip_acc$precip_acc_in[1], diff(precip_acc$precip_acc_in))
+# #Replace first column value and negative value to 0
+# precip_acc$precip_event_in &lt;- if_else(precip_acc$precip_event_in&lt;0, 0, precip_acc$precip_event_in)
+# precip_acc$precip_event_in &lt;- if_else(precip_acc$precip_event_in == precip_acc$precip_event_in, 0, precip_acc$precip_event_in)
+# write_csv(precip_acc, &quot;output/CDECprecip_edited.csv&quot;)
+#Piped
+# Download CDEC data for UCM weather station for 2018WY 10/1/2017-9/30/2018
+# Download entire water year - dataset will filter on its own when joined to PT dataset but now you will be able to generate stats for the entire water year
+# Original units: Accumuated Precip (inches)
+# Calculate event data from accumulated
+# Convert units to mm 
+precip_acc &lt;- cdec_query(station ='ucm', sensor_num =2, dur_code ='E', start_date ='2017-10-01', end_date ='2018-09-30') %&gt;% 
   rename(precip_acc_in = parameter_value ) %&gt;% 
   select(-parameter_cd) %&gt;%
   filter(complete.cases(.)) %&gt;%
@@ -216,8 +224,7 @@ The following object is masked from 㤼㸱package:rvest㤼㸲:
          precip_event_in = c(precip_acc_in[1], diff(precip_acc_in)),
          precip_event_in = if_else(precip_acc_in == precip_event_in, 0, precip_event_in),
          precip_event_mm = 25.4*precip_event_in) %&gt;% 
-  write_csv(&quot;output/UCMCDECprecip_WY2018.csv&quot;)
-</code></pre>
+  write_csv(&quot;output/UCMCDECprecip_WY2018.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBYMSA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgWDIgPSBjb2xfY2hhcmFjdGVyKCksXG4gIFgzID0gY29sX2ludGVnZXIoKSxcbiAgWDQgPSBjb2xfY2hhcmFjdGVyKCksXG4gIFg1ID0gY29sX2NoYXJhY3RlcigpLFxuICBYNiA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgWDcgPSBjb2xfZG91YmxlKCksXG4gIFg4ID0gY29sX2NoYXJhY3RlcigpXG4pXG4ifQ== -->
 <pre><code>Parsed with column specification:
@@ -232,6 +239,15 @@ cols(
   X8 = col_character()
 )</code></pre>
 <!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyNDb2RlIGltcHJvdmVtZW50czogXG4jMS4gRG93bmxvYWQgQ0RFQyBkYXRhc2VyaWVzIGZvciBjb21wbGV0ZSB3YXRlciB5ZWFyLCBpbnB1dCBkYXRlIHJldHVybnMgc3RhcnQgb2YgZGF5LCBub3QgZW5kLiAgQ291bGQgZG93bmxvYWQgMTAtMSB0aG91cmdoIDEwLTEgYW5kIGRyb3AgbGFzdCByb3dcbiMyLiBSZXBsYWNlIE5BIGFuZCBjb21wbGV0ZSBtaXNzaW5nIGRhdGUvdGltZSBzZXJpZXNcbiMjIEN1cnJlbnRseSBhIGZldyByZWNvcmRzIHRoYXQgd291bGQgbm90IGFmZmVjdCBjYWxjdWxhdGlvbnMgXG4jY29tcGxldGUoZGF0ZXRpbWUgPSBzZXEuUE9TSVh0KFwiMjAxNy0xMC0wMSAwMDowMDowMFwiLCBcIjIwMTgtMDktMzAgMDA6MDA6MDBcIiwgYnk9XCJtaW51dGVcIikpICU+JSBcbiNyZXBsYWNlX25hKHByZWNpcF9hY2NfaW4sIDApICU+JVxuICBcbmBgYCJ9 -->
+<pre class="r"><code>##Code improvements: 
+#1. Download CDEC dataseries for complete water year, input date returns start of day, not end.  Could download 10-1 thourgh 10-1 and drop last row
+#2. Replace NA and complete missing date/time series
+## Currently a few records that would not affect calculations 
+#complete(datetime = seq.POSIXt(&quot;2017-10-01 00:00:00&quot;, &quot;2018-09-30 00:00:00&quot;, by=&quot;minute&quot;)) %&gt;% 
+#replace_na(precip_acc_in, 0) %&gt;%
+  </code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->

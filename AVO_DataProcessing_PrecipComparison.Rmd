@@ -1,0 +1,62 @@
+---
+title: "AVO Data Processing: CDEC Precipitation"
+author: "Anna Fryjoff-Hung"
+date: "October 6, 2018"
+output: html_notebook
+---
+
+
+#Load Required Packages
+```{r}
+library(plyr)
+library(dplyr)
+library(CDECRetrieve)
+library(lubridate)
+library(rvest)
+library(tidyr)
+library(readr)
+```
+
+
+#Read in CDEC Data
+```{r}
+
+precip_CDEC <- cdec_query(station ='ucm', sensor_num =2, dur_code ='E', start_date ='2017-10-01', end_date ='2018-09-30') %>% 
+  rename(precip_acc_in = parameter_value ) %>% 
+  select(-parameter_cd) %>%
+  filter(complete.cases(.)) %>%
+  mutate(precip_acc_mm = (25.4*precip_acc_in),
+         precip_event_in = c(precip_acc_in[1], diff(precip_acc_in)),
+         precip_event_in = if_else(precip_acc_in == precip_event_in, 0, precip_event_in),
+         precip_event_mm = 25.4*precip_event_in, date = date(datetime)) %>% 
+  group_by(date) %>% 
+    summarize(precip_acc_mm = max(precip_acc_mm))
+  
+precip_MCD <- read_csv("Data/MCD_Airport_WY2018.csv")[,6:9] %>%
+  filter(complete.cases(.)) %>%
+  mutate(precip_acc_mm = cumsum(PRCP))
+
+precip_CIMIS <- read_csv("Data/CIMIS_WY2018.csv")[1:365,4:8] %>% 
+  mutate(Date = as.Date(Date,"%m/%d/%Y")) %>% 
+  select(-qc) %>% 
+  rename(precip_event_mm = "Precip (mm)") %>% 
+  filter(complete.cases(.)) %>%
+  mutate(Date = as.Date(Date), precip_acc_mm = cumsum(precip_event_mm))
+
+
+
+```
+# Plot Data
+```{r}
+#png("figs/season_WXprecip_acc.png", width = 600, height = 400)
+par(mar = c(5, 5, 3, 5))
+ plot(precip_CDEC$date, precip_CDEC$precip_acc_mm, type = "l", yaxt = "n", ylab = "", main = "Weather Station Accumulated Precipitation Comparison", xlab = "2018 Water Year", col = "deepskyblue")
+ axis(side = 4)
+ lines(precip_MCD$DATE, precip_MCD$precip_acc_mm, type = "l", xaxt = "n", yaxt = "n", ylab = "n", xlab = "n", col = "darkblue", lty = 2)
+  lines(precip_CIMIS$Date, precip_CIMIS$precip_acc_mm, type = "l", xaxt = "n", yaxt = "n", ylab = "n", xlab = "n", col = "blue", lty = 3)
+mtext("Accumulated Precipitation (mm)", side = 4, line = 3)
+ legend("topleft", c("UCM CDEC", "MCD Airport", "CIMIS Merced"),
+        col = c("deepskyblue", "darkblue", "blue"), lty = c(1, 2, 3))
+#dev.off()
+```
+
